@@ -1,4 +1,4 @@
-Valeur: 4/506 (00.89%)
+Valeur: 9/508 (~1%)
 
 TODO	IN PROG		DONE		Tasks
 							
@@ -19,6 +19,9 @@ TODO	IN PROG		DONE		Tasks
 6								Attaques et réception vaisseaux
 7								Conquerir planètes
 
+
+TODO	IN PROG		DONE		Tasks
+
 8								Interface Joueur
 13								IA Aléa
 15								Joueur Console
@@ -36,13 +39,20 @@ TODO	IN PROG		DONE		Tasks
 31								Voir ennemis dans nos zones
 32								Envoyer Vaisseau sur un Vaisseau
 
+
+TODO	IN PROG		DONE		Tasks
+
 33								Commande Intercepter Vaisseau
 33								Message Conf. Intercept. Vaisseau
 
+					2			Planètes possèdent des troupes
+					3			Caractéristiques troupes (Attaque, défense, vitesse)
+4								Caract. troupes s'adaptent petit à petit aux planètes sur lesquelles elles se trouvent
 2								Planètes génèrent troupes
 14								Planètes génèrent ressources (et plus troupes)
 20								Envoi Cargos (Vaisseaux ressources)
 25								Ressources différentes par planète
 35								Cargos visibles si pas dans leur zone (différent des vaisseaux visibles si dans zone du joueur qui observe, les cargos sont visibles du J1 si se trouvent dans la zone du J2 par exemple)
 
+TODO	IN PROG		DONE		Tasks
 
