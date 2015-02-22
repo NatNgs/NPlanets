@@ -1,4 +1,4 @@
-Valeur: 9/508 (~1%)
+Valeur: 9/522 (~1%)
 
 TODO	IN PROG		DONE		Tasks
 							
@@ -48,8 +48,10 @@ TODO	IN PROG		DONE		Tasks
 					2			Planètes possèdent des troupes
 					3			Caractéristiques troupes (Attaque, défense, vitesse)
 4								Caract. troupes s'adaptent petit à petit aux planètes sur lesquelles elles se trouvent
-2								Planètes génèrent troupes
-14								Planètes génèrent ressources (et plus troupes)
+					2			Planètes génèrent troupes (en fonction d'un coef)
+
+14								Planètes génèrent ressources (en fonction d'un coef par type de ressource)
+14								Construire un vaisseau coûte des ressources (dépendant de la planète source)
 20								Envoi Cargos (Vaisseaux ressources)
 25								Ressources différentes par planète
 35								Cargos visibles si pas dans leur zone (différent des vaisseaux visibles si dans zone du joueur qui observe, les cargos sont visibles du J1 si se trouvent dans la zone du J2 par exemple)

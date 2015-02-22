@@ -9,7 +9,7 @@ public class Troupe {
 	private int nbPeople;
 	private Planet source;
 	private double coefAtt; // 0 is normal, -1 is bad, 1 is good
-	private double coefDef; // (usage: att*(2^coefAtt) )
+	private double coefDef; // (usage: 2^coefxxx )
 	private double coefVit; //
 
 	public Troupe(Planet source, int nbPeople) {
@@ -21,22 +21,28 @@ public class Troupe {
 		coefVit = coefs[2];
 	}
 
-	public boolean canMergeWith(Troupe t) {
-		return coefAtt == t.coefAtt && coefDef == t.coefDef
-				&& coefVit == t.coefVit;
+	public int getNbPeople() {
+		return nbPeople;
 	}
 
-	public static Troupe merge(Troupe t1, Troupe t2) {
-		if (!t1.canMergeWith(t2))
-			return null;
+	public boolean merge(Troupe t2) {
+		if (coefAtt != t2.coefAtt || coefDef != t2.coefDef
+				|| coefVit != t2.coefVit)
+			return false;
 
-		t1.nbPeople += t2.nbPeople;
+		nbPeople += t2.nbPeople;
 		t2.nbPeople = 0;
-		return t1;
+		return true;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		return super.equals(obj);
+	}
+
+	@Override
+	public String toString() {
+		return nbPeople + " troupes [" + coefAtt + ", " + coefDef + ", "
+				+ coefVit + "]";
 	}
 }
