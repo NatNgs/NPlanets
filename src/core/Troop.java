@@ -2,7 +2,8 @@ package core;
 
 import java.util.HashMap;
 
-import map.Planet;
+import core.map.Planet;
+
 import enums.CoefType;
 import enums.Constants;
 
@@ -12,15 +13,15 @@ import enums.Constants;
  * 
  */
 public class Troop {
-	private int nbPeople;
+	private int nbSoldiers;
 	private Planet source;
 
 	// When not in this map, value considered is "0" (usage: 2^coef)
 	private HashMap<CoefType, Double> coefs;
 
-	public Troop(Planet source, int nbPeople) {
+	public Troop(Planet source, int nbSoldiers) {
 		this.source = source;
-		this.nbPeople = nbPeople;
+		this.nbSoldiers = nbSoldiers;
 		coefs = source.getAllCoefs();
 	}
 
@@ -28,8 +29,8 @@ public class Troop {
 	public double getCoef(CoefType type) {
 		return coefs.get(type);
 	}
-	public int getNbPeople() {
-		return nbPeople;
+	public int getNbSoldiers() {
+		return nbSoldiers;
 	}
 
 	@Override
@@ -39,7 +40,7 @@ public class Troop {
 
 	@Override
 	public String toString() {
-		return nbPeople + " troupes";
+		return nbSoldiers + " troupes";
 	}
 
 	// SETTERS and methods that modify planet objects //
@@ -58,18 +59,18 @@ public class Troop {
 				return false;
 		}
 
-		nbPeople += t2.nbPeople;
-		t2.nbPeople = 0;
+		nbSoldiers += t2.nbSoldiers;
+		t2.nbSoldiers = 0;
 		return true;
 	}
 
 	public Troop split(int newTroupeNbPeople) {
-		if (newTroupeNbPeople <= 0 || newTroupeNbPeople >= nbPeople)
+		if (newTroupeNbPeople <= 0 || newTroupeNbPeople >= nbSoldiers)
 			throw new IllegalArgumentException(this.getClass()
-					+ "::split: impossible to split a troop with " + nbPeople
+					+ "::split: impossible to split a troop with " + nbSoldiers
 					+ " soldiers in 2 new troupes with " + newTroupeNbPeople
-					+ " and " + (nbPeople - newTroupeNbPeople) + " soldiers.");
-		nbPeople -= newTroupeNbPeople;
+					+ " and " + (nbSoldiers - newTroupeNbPeople) + " soldiers.");
+		nbSoldiers -= newTroupeNbPeople;
 		Troop nt = new Troop(source, newTroupeNbPeople);
 		return nt;
 	}

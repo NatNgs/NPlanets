@@ -1,9 +1,8 @@
-package map;
+package core.map;
 
 import java.util.HashSet;
 
-import core.Coord;
-import core.Troop;
+import core.*;
 import enums.CoefType;
 import enums.Constants;
 
@@ -12,13 +11,14 @@ import enums.Constants;
  * @author Nathaël Noguès
  * 
  */
-public class SpaceShip {
+public class SpaceShip implements TurnDepending {
 	private Planet pSrc, pDest;
 	private Coord cSrc, cCurt, cDest;
 	private HashSet<Troop> crew;
 	private double travelTime;
 	private double speed;
 
+	// CONSTRUCTORS //
 	public SpaceShip(Planet source, Planet destination, HashSet<Troop> crew) {
 		pSrc = source;
 		pDest = destination;
@@ -30,21 +30,24 @@ public class SpaceShip {
 
 		calcSpeed();
 	}
-
 	private void calcSpeed() {
 		double totalSpeed = 0;
 		int nbCrew = 0;
 		for (Troop t : crew) {
-			totalSpeed += t.getNbPeople()
+			totalSpeed += t.getNbSoldiers()
 					* Math.pow(2, t.getCoef(CoefType.Speed));
-			nbCrew += t.getNbPeople();
+			nbCrew += t.getNbSoldiers();
 		}
 		if(nbCrew == 0)
 			throw new RuntimeException(this.getClass()
 					+ "::calcSpeed: Impossible to send vaisseau without crew.");
+		if (totalSpeed == 0)
+			throw new RuntimeException(this.getClass()
+					+ "::calcSpeed: Impossible to send vaisseau with 0 speed.");
 		speed = totalSpeed / nbCrew * Constants.VaisseauDefaultSpeed.getValue();
 	}
 
+	// GETTERS and methods that don't modify objects //
 	public Coord getCurrentSourceLocation() {
 		return pSrc.getCoord();
 	}
@@ -64,24 +67,25 @@ public class SpaceShip {
 	public double getTotalTravelTime() {
 		return cSrc.getDistance(cDest) / speed;
 	}
-
 	public double getCurentTravelTime() {
 		return travelTime;
 	}
 
-	public HashSet<Troop> getTroupe() {
+	public HashSet<Troop> getTroops() {
 		return new HashSet<>(crew);
 	}
 
+	public boolean hasFinished() {
+		return cCurt == cDest;
+	}
+
+	// SETTERS and methods that modify objects //
 	/**
 	 * 
 	 * @return 'true' if travel finished, 'false' otherwise
 	 */
-	public boolean increaseTravelTime() {
-		if (travelTime >= getTotalTravelTime())
-			return true;
-
-		travelTime += speed;
+	public boolean increaseTravelTime(int nbMore) {
+		travelTime += speed * nbMore;
 
 		cCurt = Coord.getMidCoord(cSrc, cDest, travelTime
 				/ getTotalTravelTime());
@@ -89,6 +93,13 @@ public class SpaceShip {
 		if (travelTime >= getTotalTravelTime())
 			return true;
 		return false;
+	}
+
+	// OVERRIDE methods //
+	@Override
+	public void update(int nbTurnToSpend) {
+		if (increaseTravelTime(nbTurnToSpend))
+			pDest.recieveSpaceship(this);
 	}
 
 }

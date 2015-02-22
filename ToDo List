@@ -1,13 +1,14 @@
 NPlanet Game, Developement Task List 
 © Copiright Nathaël Noguès
 
-Avancement: 27/513 (~5%)
+Avancement: 31/513 (~6%)
+En cours: 18 (~3%)
 
 TODO	PROG	DONE	Tasks
 
 				1		Coordonnées
 				1		Calcul Distances
-5						Tour par Tour
+		5				Tour par Tour
 15						Temps Réel
 
 				1		Planètes
@@ -20,8 +21,8 @@ TODO	PROG	DONE	Tasks
 				3		Vaisseaux
 				4		Envoyer Vaisseaux
 				5		Où sont les vaisseaux ?
-6						Attaques et réception vaisseaux
-7						Conquerir planètes
+		6				Attaques et réception vaisseaux
+		7				Conquerir planètes
 30						Permettre à l'utilisateur de choisir quelles troupes envoyer dans un vaisseau
 
 
@@ -65,7 +66,8 @@ TODO	PROG	DONE	Tasks
 ############################################################
 TODO	PROG	DONE	Améliorations
 
-2						Les troupes de copient plus tous les coefs des planetes (mais seulement ceux utiles)
+2						Les troupes ne copient plus tous les coefs des planetes (mais seulement ceux utiles)
+5						Les planetes produisent de moins en moins de troupes/matériaux en fonction du nombre dont elles en possèdent déjà
 
 
 

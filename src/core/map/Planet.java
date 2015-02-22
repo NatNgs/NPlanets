@@ -1,9 +1,8 @@
-package map;
+package core.map;
 
 import java.util.*;
 
-import core.Coord;
-import core.Troop;
+import core.*;
 import enums.CoefType;
 import enums.Constants;
 
@@ -12,7 +11,7 @@ import enums.Constants;
  * @author Nathaël Noguès
  * 
  */
-public class Planet {
+public class Planet implements TurnDepending {
 	private Coord coord; // Planet's location
 	private double size;
 	// When not in this map, value considered is "0" (usage: 2^coef)
@@ -46,12 +45,19 @@ public class Planet {
 		return coord;
 	}
 
+	public int getNbSoldiers() {
+		int nb = 0;
+		for (Troop t : troops)
+			nb += t.getNbSoldiers();
+		return nb;
+	}
+
 	// SETTERS and methods that modify objects //
 	public void setCoef(CoefType cType, double value) {
 		coefs.put(cType, value);
 	}
 
-	public void generateMoreTroupes() {
+	private void generateMoreTroupes() {
 		if (!coefs.containsKey(CoefType.GenTroupesSpeed))
 			setCoef(CoefType.GenTroupesSpeed, 0);
 
@@ -61,7 +67,7 @@ public class Planet {
 		cleanTroupes();
 	}
 
-	public void adaptAllTroupes() {
+	private void adaptAllTroupes() {
 		for (Troop t : troops)
 			t.adaptCaracts(this);
 	}
@@ -70,7 +76,7 @@ public class Planet {
 		ArrayList<Troop> alT = new ArrayList<>(troops);
 		for (int i = 0; i < alT.size() - 1; i++) {
 			Troop t1 = alT.get(i);
-			if (t1.getNbPeople() == 0) {
+			if (t1.getNbSoldiers() == 0) {
 				troops.remove(t1);
 				continue;
 			}
@@ -80,7 +86,7 @@ public class Planet {
 
 				t1.merge(t2); // Merge if possible, do nothing otherwise
 
-				if (t2.getNbPeople() == 0) {
+				if (t2.getNbSoldiers() == 0) {
 					troops.remove(t2);
 					alT.remove(t2);
 					j--;
@@ -99,7 +105,7 @@ public class Planet {
 		HashSet<Troop> travelingTroops = new HashSet<>();
 		int howManySoldiers = 0;
 		for (Troop t : new HashSet<>(troops))
-			if(howManySoldiers + t.getNbPeople() > nbCrew) {
+			if(howManySoldiers + t.getNbSoldiers() > nbCrew) {
 				travelingTroops.add(t.split(nbCrew-howManySoldiers));
 				howManySoldiers = nbCrew;
 				break;
@@ -107,7 +113,7 @@ public class Planet {
 			else {
 				travelingTroops.add(t);
 				troops.remove(t);
-				howManySoldiers+=t.getNbPeople();
+				howManySoldiers+=t.getNbSoldiers();
 				if(howManySoldiers == nbCrew)
 					break;
 			}
@@ -126,7 +132,20 @@ public class Planet {
 				+ "::sendInterceptor not yet implemented.");
 	}
 
+	public void recieveSpaceship(SpaceShip s) {
+		// TODO Resolving attack
+	}
+
 	// OVERRIDE //
+	@Override
+	public void update(int nbTurnToSpend) {
+		while (nbTurnToSpend > 0) {
+			adaptAllTroupes();
+			generateMoreTroupes();
+			nbTurnToSpend--;
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "Planet: " + troops;
