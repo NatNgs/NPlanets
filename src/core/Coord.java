@@ -33,4 +33,14 @@ public class Coord {
 			d += (coord[i] - c.coord[i]) * (coord[i] - c.coord[i]);
 		return Math.sqrt(d);
 	}
+
+	@Override
+	public String toString() {
+		return coord.toString();
+	}
+
+	public static void main(String[] args) {
+		Coord c = new Coord(new double[] { 32, 42.42, 0 });
+		System.out.println(c);
+	}
 }

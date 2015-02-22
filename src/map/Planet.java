@@ -2,7 +2,8 @@ package map;
 
 import java.util.*;
 
-import core.*;
+import core.Coord;
+import core.Troupe;
 import enums.CoefType;
 import enums.Constants;
 
@@ -11,15 +12,18 @@ import enums.Constants;
  * @author Nathaël Noguès
  * 
  */
-public class Planet extends Element {
+public class Planet {
 
+	private Coord coord; // Planet's location
+	private double size;
 	// When not in this map, value considered is "0" (usage: 2^coef)
 	private HashMap<CoefType, Double> coefs;
 	private HashSet<Troupe> troupes;
 
 	// CONSTRUCTORS //
 	public Planet(Coord c, double size) {
-		super(c, size);
+		coord = c;
+		this.size = size;
 		troupes = new HashSet<>();
 		coefs = new HashMap<>();
 	}
@@ -75,6 +79,11 @@ public class Planet extends Element {
 				}
 			}
 		}
+	}
+
+	public boolean tooNearFrom(Planet p) {
+		return coord.getDistance(p.coord) > (size + p.size)
+				* (size + p.size);
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package core;
 
 import java.util.HashMap;
 
-import map.Element;
 import map.Planet;
 
 /**
@@ -11,34 +10,34 @@ import map.Planet;
  * 
  */
 public class Universe {
-	private HashMap<Coord, Element> elements;
+	private HashMap<Coord, Planet> planets;
 	private double size; // Distance max avec le (0,0,0)
 
 	public void setMap(int width, int size, int nbP) {
-		elements = new HashMap<>();
+		planets = new HashMap<>();
 		this.size = size;
 		generateMap(nbP);
 	}
 
 	private void generateMap(int nbP) {
-		elements.clear();
+		planets.clear();
 
 		for(int i=0; i<nbP; i++) {
-			Element e = null;
+			Planet p = null;
 			do
-				e = new Planet(new Coord(new double[] { getRandomPosition(),
+				p = new Planet(new Coord(new double[] { getRandomPosition(),
 						getRandomPosition(), getRandomPosition() }),
 						Math.random() + 1);
-			while (canPlace(e));
+			while (canPlace(p));
 		}
 	}
 	private double getRandomPosition() {
 		return (Math.random() * 2 - 1) * size;
 	}
 
-	private boolean canPlace(Element elem) {
-		for (Element e : elements.values())
-			if(elem.tooNearFrom(e))
+	private boolean canPlace(Planet param) {
+		for (Planet p : planets.values())
+			if (param.tooNearFrom(p))
 				return false;
 		return true;
 	}
