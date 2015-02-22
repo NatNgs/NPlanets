@@ -1,7 +1,9 @@
 package map;
 
+import java.util.HashSet;
+
 import core.Coord;
-import core.Troupe;
+import core.Troop;
 import enums.CoefType;
 import enums.Constants;
 
@@ -10,23 +12,37 @@ import enums.Constants;
  * @author Nathaël Noguès
  * 
  */
-public class Vaisseau {
+public class SpaceShip {
 	private Planet pSrc, pDest;
 	private Coord cSrc, cCurt, cDest;
-	private Troupe t;
+	private HashSet<Troop> crew;
 	private double travelTime;
 	private double speed;
 
-	public Vaisseau(Planet source, Planet destination, Troupe t) {
+	public SpaceShip(Planet source, Planet destination, HashSet<Troop> crew) {
 		pSrc = source;
 		pDest = destination;
 		cSrc = source.getCoord();
 		cDest = destination.getCoord();
 		cCurt = cSrc;
-		this.t = t;
+		this.crew = crew;
 		travelTime = 0;
-		speed = Constants.VaisseauDefaultSpeed.getValue()
-				* Math.pow(2, t.getCoef(CoefType.Speed));
+
+		calcSpeed();
+	}
+
+	private void calcSpeed() {
+		double totalSpeed = 0;
+		int nbCrew = 0;
+		for (Troop t : crew) {
+			totalSpeed += t.getNbPeople()
+					* Math.pow(2, t.getCoef(CoefType.Speed));
+			nbCrew += t.getNbPeople();
+		}
+		if(nbCrew == 0)
+			throw new RuntimeException(this.getClass()
+					+ "::calcSpeed: Impossible to send vaisseau without crew.");
+		speed = totalSpeed / nbCrew * Constants.VaisseauDefaultSpeed.getValue();
 	}
 
 	public Coord getCurrentSourceLocation() {
@@ -53,8 +69,8 @@ public class Vaisseau {
 		return travelTime;
 	}
 
-	public Troupe getTroupe() {
-		return t;
+	public HashSet<Troop> getTroupe() {
+		return new HashSet<>(crew);
 	}
 
 	/**

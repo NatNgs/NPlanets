@@ -2,24 +2,23 @@ package core;
 
 import java.util.HashMap;
 
+import map.Planet;
 import enums.CoefType;
 import enums.Constants;
-
-import map.Planet;
 
 /**
  * 
  * @author Nathaël Noguès
  * 
  */
-public class Troupe {
+public class Troop {
 	private int nbPeople;
 	private Planet source;
 
 	// When not in this map, value considered is "0" (usage: 2^coef)
 	private HashMap<CoefType, Double> coefs;
 
-	public Troupe(Planet source, int nbPeople) {
+	public Troop(Planet source, int nbPeople) {
 		this.source = source;
 		this.nbPeople = nbPeople;
 		coefs = source.getAllCoefs();
@@ -44,7 +43,7 @@ public class Troupe {
 	}
 
 	// SETTERS and methods that modify planet objects //
-	public boolean merge(Troupe t2) {
+	public boolean merge(Troop t2) {
 		if (source != t2.source)
 			return false;
 
@@ -62,6 +61,17 @@ public class Troupe {
 		nbPeople += t2.nbPeople;
 		t2.nbPeople = 0;
 		return true;
+	}
+
+	public Troop split(int newTroupeNbPeople) {
+		if (newTroupeNbPeople <= 0 || newTroupeNbPeople >= nbPeople)
+			throw new IllegalArgumentException(this.getClass()
+					+ "::split: impossible to split a troop with " + nbPeople
+					+ " soldiers in 2 new troupes with " + newTroupeNbPeople
+					+ " and " + (nbPeople - newTroupeNbPeople) + " soldiers.");
+		nbPeople -= newTroupeNbPeople;
+		Troop nt = new Troop(source, newTroupeNbPeople);
+		return nt;
 	}
 
 	public void adaptCaracts(Planet p) {

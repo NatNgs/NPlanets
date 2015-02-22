@@ -16,8 +16,9 @@ public class Coord {
 	}
 	public Coord(double[] xyz) {
 		if(xyz.length != 3)
-			throw new RuntimeException(
-					"Impossible to make a new coord with other than 3 dimentions.");
+			throw new IllegalArgumentException(
+					this.getClass()
+							+ "::new: Impossible to make a new coord with other than 3 dimentions.");
 		coord = xyz;
 	}
 
