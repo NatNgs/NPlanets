@@ -2,6 +2,9 @@ package core;
 
 import java.util.HashMap;
 
+import enums.CoefType;
+import enums.Constants;
+
 import map.Planet;
 
 /**
