@@ -1,0 +1,48 @@
+Valeur: 4/506 (00.89%)
+
+TODO	IN PROG		DONE		Tasks
+							
+					1			Coordonnées
+					1			Calcul Distances
+15								Temps Réel
+										
+					1			Planètes
+					1			Générer Map fixe aléa
+15								Gén. Map fixe Systèmes aléas
+16								Gén. Map mouvante systèmes aléas
+30								Gén. Map mouv. Systèmes spécifiques
+50								Choix du mode de jeu (Map fixe ? Mouvante ? Système spécifique aléa ?)
+					
+3								Vaisseaux
+4								Envoyer Vaisseaux
+5								Où sont les vaisseaux ?
+6								Attaques et réception vaisseaux
+7								Conquerir planètes
+
+8								Interface Joueur
+13								IA Aléa
+15								Joueur Console
+20								Fenêtre êtat du jeu
+30								Joueur Fenêtre
+
+9								Message update Infos Planète
+10								Message update Infos Vaisseau
+
+11								Commande Envoi Vaisseau
+11								Message Conf. Envoi Vaisseau
+
+10								Masquage ennemis
+30								Zones possession
+31								Voir ennemis dans nos zones
+32								Envoyer Vaisseau sur un Vaisseau
+
+33								Commande Intercepter Vaisseau
+33								Message Conf. Intercept. Vaisseau
+
+2								Planètes génèrent troupes
+14								Planètes génèrent ressources (et plus troupes)
+20								Envoi Cargos (Vaisseaux ressources)
+25								Ressources différentes par planète
+35								Cargos visibles si pas dans leur zone (différent des vaisseaux visibles si dans zone du joueur qui observe, les cargos sont visibles du J1 si se trouvent dans la zone du J2 par exemple)
+
+
