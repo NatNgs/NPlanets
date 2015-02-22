@@ -1,7 +1,12 @@
 package enums;
 
+/**
+ * 
+ * @author Nathaël Noguès
+ * 
+ */
 public enum Constants {
-	PlanetDefaultGenTroupesSpeed(10.0), TroupeDefaultAdaptationTime(10.0);
+	PlanetDefaultGenTroupesSpeed(10), TroupeDefaultAdaptationTime(10);
 
 	private double value;
 
