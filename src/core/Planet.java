@@ -1,7 +1,6 @@
 package core;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * 
@@ -11,41 +10,37 @@ import java.util.HashSet;
 public class Planet extends Element {
 	private final static int DEFAULT_GEN_TROUPES = 10;
 
-	private double coefAtt; // 0 is normal, -1 is bad, 1 is good
-	private double coefDef; // (usage: 2^coefxxx )
-	private double coefVit; //
+	// When not in this map, value considered is "0" (usage: 2^coef)
+	private HashMap<CoefType, Double> coefs;
 	private HashSet<Troupe> troupes;
-	private double coefGenTroupes; // 0 is normal, -1 bad and 1 good.
 
 	// CONSTRUCTORS //
 	public Planet(Coord c, double size) {
 		super(c, size);
 		troupes = new HashSet<>();
-		coefAtt = 0;
-		coefDef = 0;
-		coefVit = 0;
-		coefGenTroupes = 0;
+		coefs = new HashMap<>();
 	}
 
 	// GETTERS and methods that don't modify planet objects //
-	public double[] getCoefs() {
-		return new double[] { coefAtt, coefDef, coefVit };
+	public double getCoef(CoefType type) {
+		return coefs.get(type);
+	}
+
+	public HashMap<CoefType, Double> getAllCoefs() {
+		return new HashMap<>(coefs);
 	}
 
 	// SETTERS and methods that modify planet objects //
-	public void setCoefsTroupes(double coefAtt, double coefDef, double coefVit) {
-		this.coefAtt = coefAtt;
-		this.coefDef = coefDef;
-		this.coefVit = coefVit;
-	}
-
-	public void setCoefGenTroupes(double coefGenTroupes) {
-		this.coefGenTroupes = coefGenTroupes;
+	public void setCoef(CoefType cType, double value) {
+		coefs.put(cType, value);
 	}
 
 	public void generateMoreTroupes() {
+		if (!coefs.containsKey(CoefType.GenTroupesSpeed))
+			setCoef(CoefType.GenTroupesSpeed, 0);
+
 		troupes.add(new Troupe(this, (int) (DEFAULT_GEN_TROUPES * Math.pow(2,
-				coefGenTroupes))));
+				coefs.get(CoefType.GenTroupesSpeed)))));
 		cleanTroupes();
 	}
 
@@ -85,8 +80,9 @@ public class Planet extends Element {
 	 */
 	public static void main(String[] args) {
 		Planet p = new Planet(new Coord(new double[] { 0, 0, 0 }), 1);
-		p.setCoefGenTroupes(Math.random() * 2 - 1);
-		System.out.println("Planet have " + (int) (p.coefGenTroupes * 100)
+		p.setCoef(CoefType.GenTroupesSpeed, Math.random() * 2 - 1);
+		System.out.println("Planet have "
+				+ (int) (p.getCoef(CoefType.GenTroupesSpeed) * 100)
 				/ 100. + " coef.");
 		System.out.println(p.toString());
 		p.generateMoreTroupes();

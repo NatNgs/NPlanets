@@ -1,5 +1,7 @@
 package core;
 
+import java.util.HashMap;
+
 /**
  * 
  * @author Nathaël Noguès
@@ -8,17 +10,14 @@ package core;
 public class Troupe {
 	private int nbPeople;
 	private Planet source;
-	private double coefAtt; // 0 is normal, -1 is bad, 1 is good
-	private double coefDef; // (usage: 2^coefxxx )
-	private double coefVit; //
+
+	// When not in this map, value considered is "0" (usage: 2^coef)
+	private HashMap<CoefType, Double> coefs;
 
 	public Troupe(Planet source, int nbPeople) {
 		this.source = source;
 		this.nbPeople = nbPeople;
-		double[] coefs = source.getCoefs();
-		coefAtt = coefs[0];
-		coefDef = coefs[1];
-		coefVit = coefs[2];
+		coefs = source.getAllCoefs();
 	}
 
 	public int getNbPeople() {
@@ -26,9 +25,19 @@ public class Troupe {
 	}
 
 	public boolean merge(Troupe t2) {
-		if (coefAtt != t2.coefAtt || coefDef != t2.coefDef
-				|| coefVit != t2.coefVit)
+		if (source != t2.source)
 			return false;
+
+		for(CoefType cType : CoefType.values()) {
+			Double dc = coefs.get(cType);
+			double val1 = dc == null?0:dc;
+
+			dc = t2.coefs.get(cType);
+			double val2 = dc == null?0:dc;
+
+			if (val1 != val2)
+				return false;
+		}
 
 		nbPeople += t2.nbPeople;
 		t2.nbPeople = 0;
@@ -42,7 +51,6 @@ public class Troupe {
 
 	@Override
 	public String toString() {
-		return nbPeople + " troupes [" + coefAtt + ", " + coefDef + ", "
-				+ coefVit + "]";
+		return nbPeople + " troupes";
 	}
 }
