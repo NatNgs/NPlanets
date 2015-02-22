@@ -6,7 +6,8 @@ package enums;
  * 
  */
 public enum Constants {
-	PlanetDefaultGenTroupesSpeed(10), TroupeDefaultAdaptationTime(10);
+	PlanetDefaultGenTroupesSpeed(10), VaisseauDefaultSpeed(1), TroupeDefaultAdaptationTime(
+			10);
 
 	private double value;
 
