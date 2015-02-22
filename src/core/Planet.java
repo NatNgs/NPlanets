@@ -8,7 +8,6 @@ import java.util.*;
  * 
  */
 public class Planet extends Element {
-	private final static int DEFAULT_GEN_TROUPES = 10;
 
 	// When not in this map, value considered is "0" (usage: 2^coef)
 	private HashMap<CoefType, Double> coefs;
@@ -39,9 +38,15 @@ public class Planet extends Element {
 		if (!coefs.containsKey(CoefType.GenTroupesSpeed))
 			setCoef(CoefType.GenTroupesSpeed, 0);
 
-		troupes.add(new Troupe(this, (int) (DEFAULT_GEN_TROUPES * Math.pow(2,
-				coefs.get(CoefType.GenTroupesSpeed)))));
+		troupes.add(new Troupe(this,
+				(int) (Constants.PlanetDefaultGenTroupesSpeed.getValue() * Math
+						.pow(2, coefs.get(CoefType.GenTroupesSpeed)))));
 		cleanTroupes();
+	}
+
+	public void adaptAllTroupes() {
+		for (Troupe t : troupes)
+			t.adaptCaracts(this);
 	}
 
 	private void cleanTroupes() {

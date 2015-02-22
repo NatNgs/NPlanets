@@ -7,8 +7,7 @@ package core;
  */
 public enum CoefType {
 	Attack("attack"), Defense("defense"), Speed("speed"), GenTroupesSpeed(
-			"genTroupesSpeed"), AttAdapt("attackAdapt"), DefAdapt(
-					"defenseAdapt"), SpdAdapt("speedAdapt");
+			"genTroupesSpeed");
 
 	private String ts;
 

@@ -20,10 +20,25 @@ public class Troupe {
 		coefs = source.getAllCoefs();
 	}
 
+	// GETTERS and methods that don't modify planet objects //
+	public double getCoef(CoefType type) {
+		return coefs.get(type);
+	}
 	public int getNbPeople() {
 		return nbPeople;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
+
+	@Override
+	public String toString() {
+		return nbPeople + " troupes";
+	}
+
+	// SETTERS and methods that modify planet objects //
 	public boolean merge(Troupe t2) {
 		if (source != t2.source)
 			return false;
@@ -44,13 +59,26 @@ public class Troupe {
 		return true;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		return super.equals(obj);
-	}
+	public void adaptCaracts(Planet p) {
+		for (CoefType cType : CoefType.values()) {
+			double tCoef = getCoef(cType);
+			double pCoef = p.getCoef(cType);
+			if (tCoef == pCoef)
+				continue;
 
-	@Override
-	public String toString() {
-		return nbPeople + " troupes";
+			double ecart = pCoef
+					/ Constants.TroupeDefaultAdaptationTime.getValue();
+			if (tCoef > pCoef) {
+				double newValue = tCoef - ecart;
+				if (newValue < pCoef)
+					newValue = pCoef;
+				coefs.put(cType, newValue);
+			} else { // if (tCoef < pCoef)
+				double newValue = tCoef + ecart;
+				if (newValue > pCoef)
+					newValue = pCoef;
+				coefs.put(cType, newValue);
+			}
+		}
 	}
 }
