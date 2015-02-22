@@ -2,23 +2,26 @@ package core;
 
 import java.util.HashMap;
 
+import map.Element;
+import map.Planet;
+
 /**
  * 
  * @author Nathaël Noguès
  * 
  */
-public class Grid {
-	private HashMap<Coord, Element> grid;
+public class Universe {
+	private HashMap<Coord, Element> elements;
 	private double size; // Distance max avec le (0,0,0)
 
 	public void setMap(int width, int size, int nbP) {
-		grid = new HashMap<>();
+		elements = new HashMap<>();
 		this.size = size;
 		generateMap(nbP);
 	}
 
 	private void generateMap(int nbP) {
-		grid.clear();
+		elements.clear();
 
 		for(int i=0; i<nbP; i++) {
 			Element e = null;
@@ -34,7 +37,7 @@ public class Grid {
 	}
 
 	private boolean canPlace(Element elem) {
-		for (Element e : grid.values())
+		for (Element e : elements.values())
 			if(elem.tooNearFrom(e))
 				return false;
 		return true;

@@ -1,4 +1,6 @@
-package core;
+package map;
+
+import core.Coord;
 
 /**
  * 

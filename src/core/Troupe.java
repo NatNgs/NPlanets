@@ -2,6 +2,8 @@ package core;
 
 import java.util.HashMap;
 
+import map.Planet;
+
 /**
  * 
  * @author Nathaël Noguès

@@ -1,6 +1,8 @@
-package core;
+package map;
 
 import java.util.*;
+
+import core.*;
 
 /**
  * 
