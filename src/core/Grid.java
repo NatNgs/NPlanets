@@ -2,7 +2,11 @@ package core;
 
 import java.util.HashMap;
 
-
+/**
+ * 
+ * @author Nathaël Noguès
+ * 
+ */
 public class Grid {
 	private HashMap<Coord, Element> grid;
 	private double size; // Distance max avec le (0,0,0)

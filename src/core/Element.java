@@ -1,5 +1,10 @@
 package core;
 
+/**
+ * 
+ * @author Nathaël Noguès
+ * 
+ */
 public abstract class Element {
 	private Coord c;
 	private double size;
