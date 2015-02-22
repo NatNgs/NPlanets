@@ -1,10 +1,8 @@
 package core.map;
 
-import java.util.HashMap;
 import java.util.HashSet;
 
-import core.Coord;
-import core.TurnDepending;
+import core.*;
 
 
 /**
@@ -13,12 +11,12 @@ import core.TurnDepending;
  * 
  */
 public class Universe implements TurnDepending {
-	private HashMap<Coord, Planet> planets;
-	private HashMap<Coord, SpaceShip> spaceships;
+	private HashSet<Planet> planets;
+	private HashSet<Player> players;
 	private double size; // Distance max avec le (0,0,0)
 
 	public void setMap(int width, int size, int nbP) {
-		planets = new HashMap<>();
+		planets = new HashSet<>();
 		this.size = size;
 		generateMap(nbP);
 	}
@@ -32,7 +30,7 @@ public class Universe implements TurnDepending {
 				p = new Planet(new Coord(new double[] { getRandomPosition(),
 						getRandomPosition(), getRandomPosition() }),
 						Math.random() + 1);
-			while (canPlace(p));
+			while (!canPlace(p));
 		}
 	}
 	private double getRandomPosition() {
@@ -40,29 +38,22 @@ public class Universe implements TurnDepending {
 	}
 
 	private boolean canPlace(Planet param) {
-		for (Planet p : planets.values())
+		for (Planet p : planets)
 			if (param.tooNearFrom(p))
 				return false;
 		return true;
 	}
 
-	private void cleanSpaceships() {
-		for (SpaceShip s : spaceships.values())
-			if(s.hasFinished())
-				spaceships.remove(s);
-	}
 
 	// OVERRIDE methods //
 	@Override
 	public void update(int nbTurnToSpend) {
 		while (nbTurnToSpend > 0) {
-			cleanSpaceships();
-			HashSet<TurnDepending> tdObjects = new HashSet<>();
-			tdObjects.addAll(planets.values());
-			tdObjects.addAll(spaceships.values());
+			for (Planet p : planets)
+				p.update(1);
 
-			for (TurnDepending tdObject : tdObjects)
-				tdObject.update(1);
+			for (Player p : players)
+				p.update(1);
 			nbTurnToSpend--;
 		}
 	}

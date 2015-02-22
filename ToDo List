@@ -1,14 +1,14 @@
 NPlanet Game, Developement Task List 
 © Copiright Nathaël Noguès
 
-Avancement: 31/513 (~6%)
-En cours: 18 (~3%)
+Avancement: 59/530 (~11%) [|         ]
+En cours: 0 (0%)
 
 TODO	PROG	DONE	Tasks
 
 				1		Coordonnées
 				1		Calcul Distances
-		5				Tour par Tour
+				5		Tour par Tour
 15						Temps Réel
 
 				1		Planètes
@@ -18,11 +18,18 @@ TODO	PROG	DONE	Tasks
 30						Gén. Map mouv. Systèmes spécifiques
 50						Choix du mode de jeu (Map fixe ? Mouvante ? Système spécifique aléa ?)
 
+				5		Données de Joueur
+				2		Planètes appartiennent à des joueurs (ou pas)
+				3		Vaisseaux appartiennent à des joueurs (toujours)
+30						Zones possession
+31						Voir ennemis dans nos zones
+
 				3		Vaisseaux
 				4		Envoyer Vaisseaux
+7						Envoyer Vaisseaux amicaux et vaisseaux agressifs (dons de soldats / materiaux)
 				5		Où sont les vaisseaux ?
-		6				Attaques et réception vaisseaux
-		7				Conquerir planètes
+				6		Attaques et réception vaisseaux
+				7		Conquerir planètes
 30						Permettre à l'utilisateur de choisir quelles troupes envoyer dans un vaisseau
 
 
@@ -41,8 +48,6 @@ TODO	PROG	DONE	Tasks
 11						Message Conf. Envoi Vaisseau
 
 10						Masquage ennemis
-30						Zones possession
-31						Voir ennemis dans nos zones
 32						Envoyer Vaisseau sur un Vaisseau
 
 

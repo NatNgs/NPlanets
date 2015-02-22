@@ -12,6 +12,7 @@ import enums.Constants;
  * 
  */
 public class Planet implements TurnDepending {
+	private Player owner; // Can be Null
 	private Coord coord; // Planet's location
 	private double size;
 	// When not in this map, value considered is "0" (usage: 2^coef)
@@ -25,6 +26,7 @@ public class Planet implements TurnDepending {
 		this.size = size;
 		troops = new HashSet<>();
 		coefs = new HashMap<>();
+		owner = null;
 	}
 
 
@@ -52,7 +54,14 @@ public class Planet implements TurnDepending {
 		return nb;
 	}
 
+	public Player getOwner() {
+		return owner;
+	}
+
 	// SETTERS and methods that modify objects //
+	public void addTroops(Collection<Troop> troops) {
+		this.troops.addAll(troops);
+	}
 	public void setCoef(CoefType cType, double value) {
 		coefs.put(cType, value);
 	}
@@ -64,7 +73,6 @@ public class Planet implements TurnDepending {
 		troops.add(new Troop(this,
 				(int) (Constants.PlanetDefaultGenTroupesSpeed.getValue() * Math
 						.pow(2, coefs.get(CoefType.GenTroupesSpeed)))));
-		cleanTroupes();
 	}
 
 	private void adaptAllTroupes() {
@@ -72,7 +80,7 @@ public class Planet implements TurnDepending {
 			t.adaptCaracts(this);
 	}
 
-	private void cleanTroupes() {
+	private void cleanTroops() {
 		ArrayList<Troop> alT = new ArrayList<>(troops);
 		for (int i = 0; i < alT.size() - 1; i++) {
 			Troop t1 = alT.get(i);
@@ -96,6 +104,10 @@ public class Planet implements TurnDepending {
 		}
 	}
 
+	public void setOwner(Player p) {
+		owner = p;
+
+	}
 
 	// GAME methods //
 	public SpaceShip sendSpaceship(Planet destination, int nbCrew) {
@@ -133,7 +145,14 @@ public class Planet implements TurnDepending {
 	}
 
 	public void recieveSpaceship(SpaceShip s) {
-		// TODO Resolving attack
+		if (s.getOwner() == getOwner())
+			addTroops(s.getTroops());
+		else {
+			BattleReport br = new BattleReport(s, this);
+			s.getOwner().addReport(br);
+			if (owner != null)
+				owner.addReport(br);
+		}
 	}
 
 	// OVERRIDE //
@@ -142,6 +161,8 @@ public class Planet implements TurnDepending {
 		while (nbTurnToSpend > 0) {
 			adaptAllTroupes();
 			generateMoreTroupes();
+			cleanTroops();
+			System.gc();
 			nbTurnToSpend--;
 		}
 	}

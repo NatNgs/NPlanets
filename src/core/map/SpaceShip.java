@@ -12,6 +12,7 @@ import enums.Constants;
  * 
  */
 public class SpaceShip implements TurnDepending {
+	private Player owner;
 	private Planet pSrc, pDest;
 	private Coord cSrc, cCurt, cDest;
 	private HashSet<Troop> crew;
@@ -20,6 +21,11 @@ public class SpaceShip implements TurnDepending {
 
 	// CONSTRUCTORS //
 	public SpaceShip(Planet source, Planet destination, HashSet<Troop> crew) {
+		owner = source.getOwner();
+		if(owner == null)
+			throw new IllegalArgumentException(
+					this.getClass()
+					+ "::new: Impossible to send Spaceship from a non player planet.");
 		pSrc = source;
 		pDest = destination;
 		cSrc = source.getCoord();
@@ -77,6 +83,17 @@ public class SpaceShip implements TurnDepending {
 
 	public boolean hasFinished() {
 		return cCurt == cDest;
+	}
+
+	public Player getOwner() {
+		return owner;
+	}
+
+	public int getNbSoldiers() {
+		int nb = 0;
+		for (Troop t : crew)
+			nb += t.getNbSoldiers();
+		return nb;
 	}
 
 	// SETTERS and methods that modify objects //

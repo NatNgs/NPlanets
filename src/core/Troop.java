@@ -3,7 +3,6 @@ package core;
 import java.util.HashMap;
 
 import core.map.Planet;
-
 import enums.CoefType;
 import enums.Constants;
 
@@ -64,14 +63,23 @@ public class Troop {
 		return true;
 	}
 
-	public Troop split(int newTroupeNbPeople) {
-		if (newTroupeNbPeople <= 0 || newTroupeNbPeople >= nbSoldiers)
+	public void kill(int nbDeadSoldiers) {
+		if (nbDeadSoldiers <= 0 || nbDeadSoldiers >= nbSoldiers)
+			throw new IllegalArgumentException(this.getClass()
+					+ "::split: impossible to kill " + nbDeadSoldiers
+					+ " soldiers in troops where are " + nbSoldiers
+					+ " soldiers.");
+		nbSoldiers -= nbDeadSoldiers;
+	}
+
+	public Troop split(int nbNewTroopSoldier) {
+		if (nbNewTroopSoldier <= 0 || nbNewTroopSoldier >= nbSoldiers)
 			throw new IllegalArgumentException(this.getClass()
 					+ "::split: impossible to split a troop with " + nbSoldiers
-					+ " soldiers in 2 new troupes with " + newTroupeNbPeople
-					+ " and " + (nbSoldiers - newTroupeNbPeople) + " soldiers.");
-		nbSoldiers -= newTroupeNbPeople;
-		Troop nt = new Troop(source, newTroupeNbPeople);
+					+ " soldiers in 2 new troupes with " + nbNewTroopSoldier
+					+ " and " + (nbSoldiers - nbNewTroopSoldier) + " soldiers.");
+		nbSoldiers -= nbNewTroopSoldier;
+		Troop nt = new Troop(source, nbNewTroopSoldier);
 		return nt;
 	}
 
