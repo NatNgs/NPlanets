@@ -1,0 +1,61 @@
+NPlanet Game, Developement Task List 
+© Copiright Nathaël Noguès
+
+envoi: Envoi de la commande de l'utilisateur (joueur) vers le controleur
+retour: Envoi d'un message de confirmation (ou non) du controleur vers le joueur.
+
+##############
+
+Commande pour déclarer un nouveau joueur
+
+envoi:
+{
+commande : "player_join"
+player : APlayer
+server : String(server_name)
+}
+
+retour:
+{
+commande : "player_join"
+state : "ok"				Le joueur a rejoint le serveur
+		"already"			Le joueur est déjà dans ce serveur
+		"another"			Le joueur est déjà dans un autre serveur
+		"server_not_found"	Le serveur n'a pas été trouvé
+		"error"				Une autre erreur s'est produite
+}
+
+###############
+
+Commande pour quiter un serveur
+
+envoi:
+{
+commande : "player_leave"
+player : APlayer
+}
+
+retour:
+{
+commande : "player_leave"
+state : "ok"		Le joueur a quité son serveur
+		"already"	Le joueur n'est sur aucun serveur
+		"error"		Une autre erreur s'est produite
+}
+
+###############
+
+...
+
+envoi:
+{
+commande : ""
+}
+
+retour:
+{
+commande : ""
+state : "ok" / "already" / "error"
+}
+
+###############
