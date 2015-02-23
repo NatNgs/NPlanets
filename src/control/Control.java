@@ -101,21 +101,32 @@ public class Control {
 
 	// Server Command Methods //
 	private static Message newServer(AServer aServer, CommandServerOpen c) {
+		if (servers.containsKey(aServer))
+			return new MessageError("Server '" + c.getName()
+					+ "' is already open", c);
 
-		return new MessageError("Server Command '" + c.getName()
-				+ "' is unknown", c);
+		servers.put(aServer, new Control());
+		return new MessageCommand("ok", c);
 	}
 
 	private Message serverClose(AServer aServer, CommandServerClose c) {
+		if (!servers.containsKey(aServer))
+			return new MessageError("Server '" + c.getName()
+					+ "' is already closed", c);
 
-		return new MessageError("Server Command '" + c.getName()
-				+ "' is unknown", c);
+		servers.remove(aServer);
+		sendMessageToAll(new MessageServer("closed", aServer.getName()));
+
+		return new MessageCommand("ok", c);
 	}
 
 	private Message serverReady(AServer aServer, CommandServerReady c) {
+		if (players.size() < 2)
+			return new MessageCommand("not_enough_players", c);
+		if (playersReady.size() < players.size())
+			return new MessageCommand("players_not_ready", c);
 
-		return new MessageError("Server Command '" + c.getName()
-				+ "' is unknown", c);
+		return new MessageCommand("ok", c);
 	}
 
 	// PUBLIC STATIC access methods //
