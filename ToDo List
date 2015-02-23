@@ -3,7 +3,7 @@ NPlanet Game, Developement Task List
 
 		(DONE + V.Ajoutée) / (TODO + PROG + DONE + V.Ajoutée)
 		
-Avancement:	113	/ 583 (~19%) [||        ]
+Avancement:	125	/ 595 (~21%) [||        ]
 
 
 TOTAL
@@ -77,8 +77,9 @@ TODO	PROG	DONE	Tasks
 
 ############################################################
 
-Valeur ajoutée: 6
+Valeur ajoutée: 21
 
+Pour chaque Commande
 Valeur	#PROG	#DONE	Tasks
 
 1				4		Spécification d'une commande Joueur → Controleur
@@ -86,8 +87,14 @@ Valeur	#PROG	#DONE	Tasks
 1						Spécification d'une commande Controleur → Joueur
 1						Spécification d'une commande Controleur → Serveur
 		
+1		4		2		Traîtement d'une commande Controleur
+1				8		Envoi du retour d'une commande Controleur
+1				2		Envoi d'une commande Controleur → Joueur
+1				0		Envoi d'une commande Controleur → Serveur
+
+Pour chaque Commande et pour chaque APlayer / AServer
+Valeur	#PROG	#DONE	Tasks
+
 2						Envoi d'une commande Joueur/Serveur
-3						Traîtement d'une commande Controleur
-2						Envoi du retour d'une commande Controleur
 3						Traîtement du retour d'une commande Joueur/Serveur
 

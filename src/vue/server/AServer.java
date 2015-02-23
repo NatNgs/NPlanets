@@ -1,7 +1,7 @@
 package vue.server;
 
-import vue.messages.Message;
-import vue.messages.commandServer.CommandServer;
+import java.util.HashMap;
+
 import control.Control;
 
 public abstract class AServer {
@@ -15,10 +15,10 @@ public abstract class AServer {
 		return name;
 	}
 
-	public final Message sendCommand(CommandServer c) {
+	public final HashMap<String, String> sendCommand(HashMap<String, String> c) {
 		return Control.sendCommand(this, c);
 	}
 
-	public abstract void recieveInfos(Message m);
+	public abstract void recieveInfos(HashMap<String, String> m);
 
 }

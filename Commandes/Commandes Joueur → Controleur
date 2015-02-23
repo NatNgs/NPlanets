@@ -4,20 +4,50 @@ NPlanet Game, Developement Task List
 envoi: Envoi de la commande de l'utilisateur (joueur) vers le controleur
 retour: Envoi d'un message de confirmation (ou non) du controleur vers le joueur.
 
+
+##############
+
+En cas d'impossibilité de faire la commande car le joueur n'est pas sur un serveur
+
+retour
+{
+command : ...
+state : "not_in_game"
+}
+
+##############
+
+En cas d'envoi d'une commande erronée:
+
+retour
+{
+command : ...
+state : "command_unknown"
+}
+
+##############
+
+En cas de mauvaise utilisation d'une commande (manque de paramètres, contenu inaproprié):
+
+retour
+{
+command : ...
+state : "wrong_command_use"
+}
+
 ##############
 
 Commande pour déclarer un nouveau joueur
 
 envoi
 {
-commande : "player_join"
-player : APlayer
+command : "player_join"
 server : String(server_name)
 }
 
 retour
 {
-commande : "player_join"
+command : "player_join"
 state : "ok"		Le joueur a rejoint le serveur
 		"already"	Le joueur est déjà dans ce serveur
 		"another"	Le joueur est déjà dans un autre serveur
@@ -31,16 +61,15 @@ Commande pour quiter un serveur
 
 envoi
 {
-commande : "player_leave"
-player : APlayer
+command : "player_leave"
 }
 
 retour
 {
-commande : "player_leave"
-state : "ok"		Le joueur a quité son serveur
-		"already"	Le joueur n'est sur aucun serveur
-		"error"		Une autre erreur s'est produite
+command : "player_leave"
+state : "ok"			Le joueur a quité son serveur
+		"not_in_game"	Le joueur n'est sur aucun serveur
+		"error"			Une autre erreur s'est produite
 }
 
 ###############
@@ -49,13 +78,12 @@ Commande pour prévenir d'être prêt à démarer le jeu
 
 envoi
 {
-commande : "player_ready"
-player: APlayer
+command : "player_ready"
 }
 
 retour
 {
-commande : "player_ready"
+command : "player_ready"
 state : "ok"		Le joueur est maintenant prêt
 		"already"	Le joueur est déjà prêt
 		"error"		Une autre erreur s'est produite
@@ -67,13 +95,12 @@ Commande pour prévenir de ne plus être prêt à démarer le jeu
 
 envoi
 {
-commande : "player_not_ready"
-player: APlayer
+command : "player_not_ready"
 }
 
 retour
 {
-commande : "player_not_ready"
+command : "player_not_ready"
 state : "ok"		Le joueur n'est plus prêt
 		"already"	Le joueur n'est déjà pas prêt
 		"error"		Une autre erreur s'est produite

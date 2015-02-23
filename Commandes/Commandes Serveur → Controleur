@@ -8,17 +8,36 @@ retour: Envoi d'un message de confirmation (ou non) du controleur vers le serveu
 
 ##############
 
+En cas d'impossibilité de faire la commande car le serveur n'est pas ouver
+
+retour
+{
+command : ...
+state : "not_open"
+}
+
+##############
+
+En cas d'envoi d'une commande erronée:
+
+retour
+{
+command : ...
+state : "command_unknown"
+}
+
+##############
+
 Commande pour déclarer une nouvelle interface serveur
 
 envoi
 {
-commande : "server_open"
-server : AServer
+command : "server_open"
 }
 
 retour
 {
-commande : "server_open"
+command : "server_open"
 state : "ok"		le serveur a bien été ouvert
 		"already" 	ce serveur est déjà ouvert
 		"same_name" un serveur du même nom est déjà ouvert
@@ -31,13 +50,12 @@ Commande pour fermer un serveur
 
 envoi
 {
-commande : "server_close"
-server : AServer
+command : "server_close"
 }
 
 retour
 {
-commande : "server_close"
+command : "server_close"
 state : "ok"		le serveur a bien été fermé
 		"already"	ce serveur est déjà fermé
 		"error"		une autre erreur s'est produite
@@ -49,13 +67,12 @@ Commande pour lancer le jeu sur un serveur
 
 envoi
 {
-commande : "server_start"
-server : AServer
+command : "server_start"
 }
 
 retour
 {
-commande :	"server_start"
+command :	"server_start"
 state : "ok" 					la partie a bien démaré sur le serveur
 		"already"				la partie est déjà en cours sur ce serveur
 		"not_enough_players"	il n'y a pas assez de joueurs présents pour débuter la partie
@@ -72,13 +89,12 @@ Commande pour stoper le jeu sur un serveur
 
 envoi
 {
-commande : "server_stop"
-server : AServer
+command : "server_stop"
 }
 
 retour
 {
-commande : "server_stop"
+command : "server_stop"
 state : "ok"		la partie a bien été arrêtée
 		"already"	la partie n'est pas en cours sur ce serveur
 		"error"		une autre erreur s'est produite
@@ -90,14 +106,13 @@ Commande pour forcer un joueur à quiter le serveur
 
 envoi
 {
-commande : "server_kick"
-server : AServer
+command : "server_kick"
 player : String(player_name)
 }
 
 retour
 {
-commande : "server_kick"
+command : "server_kick"
 state : "ok"		le joueur a quité le serveur
 		"not_found"	le joueur n'a pas été trouvé sur ce serveur
 		"error"		une autre erreur s'est produite

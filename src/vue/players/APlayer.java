@@ -1,7 +1,7 @@
 package vue.players;
 
-import vue.messages.Message;
-import vue.messages.commandPlayer.CommandPlayer;
+import java.util.HashMap;
+
 import control.Control;
 
 /**
@@ -20,9 +20,9 @@ public abstract class APlayer {
 		return name;
 	}
 
-	public final Message sendCommand(CommandPlayer c) {
+	public final HashMap<String, String> sendCommand(HashMap<String, String> c) {
 		return Control.sendCommand(this, c);
 	}
 
-	public abstract void recieveInfos(Message m);
+	public abstract void recieveInfos(HashMap<String, String> m);
 }
