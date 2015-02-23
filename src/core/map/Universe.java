@@ -2,7 +2,8 @@ package core.map;
 
 import java.util.HashSet;
 
-import core.*;
+import core.Coord;
+import core.TurnDepending;
 
 
 /**
@@ -12,7 +13,6 @@ import core.*;
  */
 public class Universe implements TurnDepending {
 	private HashSet<Planet> planets;
-	private HashSet<Player> players;
 	private double size; // Distance max avec le (0,0,0)
 
 	public void setMap(int width, int size, int nbP) {
@@ -52,8 +52,6 @@ public class Universe implements TurnDepending {
 			for (Planet p : planets)
 				p.update(1);
 
-			for (Player p : players)
-				p.update(1);
 			nbTurnToSpend--;
 		}
 	}
