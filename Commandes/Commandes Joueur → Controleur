@@ -8,34 +8,34 @@ retour: Envoi d'un message de confirmation (ou non) du controleur vers le joueur
 
 Commande pour déclarer un nouveau joueur
 
-envoi:
+envoi
 {
 commande : "player_join"
 player : APlayer
 server : String(server_name)
 }
 
-retour:
+retour
 {
 commande : "player_join"
-state : "ok"				Le joueur a rejoint le serveur
-		"already"			Le joueur est déjà dans ce serveur
-		"another"			Le joueur est déjà dans un autre serveur
-		"server_not_found"	Le serveur n'a pas été trouvé
-		"error"				Une autre erreur s'est produite
+state : "ok"		Le joueur a rejoint le serveur
+		"already"	Le joueur est déjà dans ce serveur
+		"another"	Le joueur est déjà dans un autre serveur
+		"not_found"	Le serveur n'a pas été trouvé
+		"error"		Une autre erreur s'est produite
 }
 
 ###############
 
 Commande pour quiter un serveur
 
-envoi:
+envoi
 {
 commande : "player_leave"
 player : APlayer
 }
 
-retour:
+retour
 {
 commande : "player_leave"
 state : "ok"		Le joueur a quité son serveur
@@ -45,17 +45,36 @@ state : "ok"		Le joueur a quité son serveur
 
 ###############
 
-...
+Commande pour prévenir d'être prêt à démarer le jeu
 
-envoi:
+envoi
 {
-commande : ""
+commande : "player_ready"
+player: APlayer
 }
 
-retour:
+retour
 {
-commande : ""
-state : "ok" / "already" / "error"
+commande : "player_ready"
+state : "ok"		Le joueur est maintenant prêt
+		"already"	Le joueur est déjà prêt
+		"error"		Une autre erreur s'est produite
 }
 
 ###############
+
+Commande pour prévenir de ne plus être prêt à démarer le jeu
+
+envoi
+{
+commande : "player_not_ready"
+player: APlayer
+}
+
+retour
+{
+commande : "player_not_ready"
+state : "ok"		Le joueur n'est plus prêt
+		"already"	Le joueur n'est déjà pas prêt
+		"error"		Une autre erreur s'est produite
+}

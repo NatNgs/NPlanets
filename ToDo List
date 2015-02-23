@@ -81,7 +81,7 @@ Valeur ajoutée: 6
 
 Valeur	#PROG	#DONE	Tasks
 
-1				2		Spécification d'une commande Joueur → Controleur
+1				4		Spécification d'une commande Joueur → Controleur
 1				5		Spécification d'une commande Serveur → Controleur
 1						Spécification d'une commande Controleur → Joueur
 1						Spécification d'une commande Controleur → Serveur
