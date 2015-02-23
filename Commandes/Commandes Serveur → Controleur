@@ -10,13 +10,13 @@ retour: Envoi d'un message de confirmation (ou non) du controleur vers le serveu
 
 Commande pour déclarer une nouvelle interface serveur
 
-envoi:
+envoi
 {
 commande : "server_open"
 server : AServer
 }
 
-retour:
+retour
 {
 commande : "server_open"
 state : "ok"		le serveur a bien été ouvert
@@ -29,13 +29,13 @@ state : "ok"		le serveur a bien été ouvert
 
 Commande pour fermer un serveur
 
-envoi:
+envoi
 {
 commande : "server_close"
 server : AServer
 }
 
-retour:
+retour
 {
 commande : "server_close"
 state : "ok"		le serveur a bien été fermé
@@ -47,13 +47,13 @@ state : "ok"		le serveur a bien été fermé
 
 Commande pour lancer le jeu sur un serveur
 
-envoi:
+envoi
 {
 commande : "server_start"
 server : AServer
 }
 
-retour:
+retour
 {
 commande :	"server_start"
 state : "ok" 					la partie a bien démaré sur le serveur
@@ -70,13 +70,13 @@ nbMin :	int		indique le nombre de joueurs minimum requis pour démarer la partie
 
 Commande pour stoper le jeu sur un serveur
 
-envoi:
+envoi
 {
 commande : "server_stop"
 server : AServer
 }
 
-retour:
+retour
 {
 commande : "server_stop"
 state : "ok"		la partie a bien été arrêtée
@@ -86,18 +86,19 @@ state : "ok"		la partie a bien été arrêtée
 
 ###############
 
-...
+Commande pour forcer un joueur à quiter le serveur
 
-envoi:
+envoi
 {
-commande : ""
+commande : "server_kick"
+server : AServer
+player : String(player_name)
 }
 
-retour:
+retour
 {
-commande : ""
-state : "ok"	...
-		"error"	une autre erreur s'est produite
+commande : "server_kick"
+state : "ok"		le joueur a quité le serveur
+		"not_found"	le joueur n'a pas été trouvé sur ce serveur
+		"error"		une autre erreur s'est produite
 }
-
-###############

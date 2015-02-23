@@ -1,9 +1,13 @@
 NPlanet Game, Developement Task List 
 © Copiright Nathaël Noguès
 
-Avancement:	107	/577 (~18%) [|         ]
-En cours:	 30
+		(DONE + V.Ajoutée) / (TODO + PROG + DONE + V.Ajoutée)
+		
+Avancement:	113	/ 583 (~19%) [||        ]
 
+
+TOTAL
+470		0		107
 TODO	PROG	DONE	Tasks
 
 				1		Coordonnées
@@ -73,12 +77,12 @@ TODO	PROG	DONE	Tasks
 
 ############################################################
 
-Valeur ajoutée: 4
+Valeur ajoutée: 6
 
 Valeur	#PROG	#DONE	Tasks
 
-1						Spécification d'une commande Joueur → Controleur
-1				4		Spécification d'une commande Serveur → Controleur
+1				2		Spécification d'une commande Joueur → Controleur
+1				5		Spécification d'une commande Serveur → Controleur
 1						Spécification d'une commande Controleur → Joueur
 1						Spécification d'une commande Controleur → Serveur
 		
