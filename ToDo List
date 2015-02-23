@@ -1,8 +1,8 @@
 NPlanet Game, Developement Task List 
 © Copiright Nathaël Noguès
 
-Avancement:	132	/645 (~20%) [||        ]
-En cours:	  0
+Avancement:	107	/577 (~18%) [|         ]
+En cours:	 30
 
 TODO	PROG	DONE	Tasks
 
@@ -40,28 +40,10 @@ TODO	PROG	DONE	Tasks
 15						Joueur Console
 30						Joueur Fenêtre
 
-				5		Commande Se Connecter
-				5		Commande Ready to play
-				5		Commande Quiter
-				5		Message Joueur s'est connecté
-				5		Message Joueur a quité le jeu
-9						Message update Infos Planète
-10						Message update Infos Vaisseau
-
-11						Commande Envoi Vaisseau
-11						Message Conf. Envoi Vaisseau
-
-33						Commande Intercepter Vaisseau
-33						Message Conf. Intercept. Vaisseau
-
 				10		Interface Serveur
 				15		Ajouter/Supprimer des serveurs
-				15		Ajouter/Supprimer des joueus à la partie
+				15		Ajouter/Supprimer des joueurs à la partie
 20						Fenêtre êtat du jeu
-				5		Commande Quiter
-		8				Commande Débuter la partie
-12						Message Conf. Début partie
-
 
 TODO	PROG	DONE	Tasks
 
@@ -89,4 +71,19 @@ TODO	PROG	DONE	Tasks
 10						Channels de chat (global / équipe / mp)
 20						Possibilité d'équipes
 
+############################################################
+
+Valeur ajoutée: 4
+
+Valeur	#PROG	#DONE	Tasks
+
+1						Spécification d'une commande Joueur → Controleur
+1				4		Spécification d'une commande Serveur → Controleur
+1						Spécification d'une commande Controleur → Joueur
+1						Spécification d'une commande Controleur → Serveur
+		
+2						Envoi d'une commande Joueur/Serveur
+3						Traîtement d'une commande Controleur
+2						Envoi du retour d'une commande Controleur
+3						Traîtement du retour d'une commande Joueur/Serveur
 

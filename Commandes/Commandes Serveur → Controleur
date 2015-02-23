@@ -1,0 +1,103 @@
+NPlanet Game, Developement Task List 
+© Copiright Nathaël Noguès
+
+
+envoi: Envoi de la commande de l'utilisateur (serveur) vers le controleur
+retour: Envoi d'un message de confirmation (ou non) du controleur vers le serveur
+
+
+##############
+
+Commande pour déclarer une nouvelle interface serveur
+
+envoi:
+{
+commande : "server_open"
+server : AServer
+}
+
+retour:
+{
+commande : "server_open"
+state : "ok"		le serveur a bien été ouvert
+		"already" 	ce serveur est déjà ouvert
+		"same_name" un serveur du même nom est déjà ouvert
+		"error"		une autre erreur s'est produite
+}
+
+###############
+
+Commande pour fermer un serveur
+
+envoi:
+{
+commande : "server_close"
+server : AServer
+}
+
+retour:
+{
+commande : "server_close"
+state : "ok"		le serveur a bien été fermé
+		"already"	ce serveur est déjà fermé
+		"error"		une autre erreur s'est produite
+}
+
+###############
+
+Commande pour lancer le jeu sur un serveur
+
+envoi:
+{
+commande : "server_start"
+server : AServer
+}
+
+retour:
+{
+commande :	"server_start"
+state : "ok" 					la partie a bien démaré sur le serveur
+		"already"				la partie est déjà en cours sur ce serveur
+		"not_enough_players"	il n'y a pas assez de joueurs présents pour débuter la partie
+		"players_not_ready"		tous les joueurs ne sont pas prêts à jouer
+		"error"					une autre erreur s'est produite
+nbTotal : int	indique le nombre total de joueurs présents sur le serveur
+nbReady : int	indique le nombre de joueurs prête à jouer sur le serveur
+nbMin :	int		indique le nombre de joueurs minimum requis pour démarer la partie
+}
+
+###############
+
+Commande pour stoper le jeu sur un serveur
+
+envoi:
+{
+commande : "server_stop"
+server : AServer
+}
+
+retour:
+{
+commande : "server_stop"
+state : "ok"		la partie a bien été arrêtée
+		"already"	la partie n'est pas en cours sur ce serveur
+		"error"		une autre erreur s'est produite
+}
+
+###############
+
+...
+
+envoi:
+{
+commande : ""
+}
+
+retour:
+{
+commande : ""
+state : "ok"	...
+		"error"	une autre erreur s'est produite
+}
+
+###############
