@@ -1,7 +1,7 @@
 package vue.players;
 
-import vue.messages.Command;
 import vue.messages.Message;
+import vue.messages.commandPlayer.CommandPlayer;
 import control.Control;
 
 /**
@@ -20,7 +20,7 @@ public abstract class APlayer {
 		return name;
 	}
 
-	public final Message sendCommand(Command c) {
+	public final Message sendCommand(CommandPlayer c) {
 		return Control.sendCommand(this, c);
 	}
 

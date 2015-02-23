@@ -1,8 +1,8 @@
 NPlanet Game, Developement Task List 
 © Copiright Nathaël Noguès
 
-Avancement: 87/635 (~13%) [|         ]
-En cours: 20 (~3%)
+Avancement:	132	/645 (~20%) [||        ]
+En cours:	  0
 
 TODO	PROG	DONE	Tasks
 
@@ -36,7 +36,6 @@ TODO	PROG	DONE	Tasks
 TODO	PROG	DONE	Tasks
 
 				8		Interface Joueur
-		20				Jeu executable
 13						IA Aléa
 15						Joueur Console
 30						Joueur Fenêtre
@@ -55,9 +54,12 @@ TODO	PROG	DONE	Tasks
 33						Commande Intercepter Vaisseau
 33						Message Conf. Intercept. Vaisseau
 
+				10		Interface Serveur
+				15		Ajouter/Supprimer des serveurs
+				15		Ajouter/Supprimer des joueus à la partie
 20						Fenêtre êtat du jeu
-5						Commande Quiter
-8						Commande Débuter la partie
+				5		Commande Quiter
+		8				Commande Débuter la partie
 12						Message Conf. Début partie
 
 
