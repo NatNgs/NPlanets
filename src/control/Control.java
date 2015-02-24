@@ -108,34 +108,37 @@ public class Control {
 
 	private HashMap<String, String> playerReady(APlayer aPlayer,
 			HashMap<String, String> c) {
-		if (!players.containsKey(aPlayer))
-			return new MessageError("Player not in game", c);
 
-		if (c.isReady()) {
-			if (playersReady.contains(aPlayer))
-				return new MessageError("Player already ready", c);
-			else
-				playersReady.add(aPlayer);
-		} else if (!playersReady.contains(aPlayer))
-			return new MessageError("Player is already not ready", c);
-		else
-			playersReady.remove(aPlayer);
+		HashMap<String, String> toSender = new HashMap<>(c);
+		if (playersReady.contains(aPlayer)) {
+			toSender.put("state", "already");
+			return toSender;
+		}
 
-		sendMessageToAll(new MessagePlayer(c.isReady() ? "ready" : "not_ready",
-				aPlayer.getName()));
+		playersReady.add(aPlayer);
 
-		return new MessageCommand("ok", c);
+		HashMap<String, String> toOthers = new HashMap<>();
+		toOthers.put("command", "player_ready");
+		toOthers.put("player", aPlayer.getName());
+		sendMessageToAll(toOthers);
+
+		return toSender;
 	}
 
 	// Server Command Methods //
 	private static HashMap<String, String> newServer(AServer aServer,
 			HashMap<String, String> c) {
-		if (servers.containsKey(aServer))
-			return new MessageError("Server '" + c.getName()
-					+ "' is already open", c);
+		HashMap<String, String> toSender = new HashMap<>(c);
+
+		if (servers.containsKey(aServer)) {
+			toSender.put("state", "already");
+			return toSender;
+		}
 
 		servers.put(aServer, new Control());
-		return new MessageCommand("ok", c);
+
+		toSender.put("state", "ok");
+		return toSender;
 	}
 
 	private HashMap<String, String> serverClose(AServer aServer,
@@ -207,11 +210,11 @@ public class Control {
 		if (commandName != null)
 			try {
 				switch (commandName) {
-				case "close":
+				case "server_close":
 					return game.serverClose(aServer, c);
-				case "open":
+				case "server_open":
 					return newServer(aServer, c);
-				case "ready":
+				case "server_ready":
 					return game.serverReady(aServer, c);
 				}
 			} catch (NullPointerException npe) {

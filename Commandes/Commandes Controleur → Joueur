@@ -1,0 +1,15 @@
+NPlanet Game, Developement Task List 
+© Copiright Nathaël Noguès
+
+Envoi d'un message du controleur vers l'utilisateur (joueur)
+
+##############
+
+Commande pour prévenir qu'un autre APlayer s'est connecté au AServer
+
+{
+commande : "player_join"
+player : String(player_name)
+}
+
+###############
