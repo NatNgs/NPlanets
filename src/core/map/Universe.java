@@ -2,8 +2,8 @@ package core.map;
 
 import java.util.HashSet;
 
-import core.Coord;
-import core.TurnDepending;
+import core.model.Coord;
+import core.model.TurnDepending;
 
 
 /**

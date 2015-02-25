@@ -5,7 +5,7 @@ import inter.AServer;
 
 import java.util.HashMap;
 
-import core.Player;
+import core.model.Player;
 
 /**
  * 
@@ -66,7 +66,7 @@ public abstract class Control {
 		HashMap<String, String> toOthers = new HashMap<>();
 		toOthers.put("command", "player_join");
 		toOthers.put("player", aPlayer.getName());
-		game.sendMessageToPlayers(toOthers);
+		game.sendMessageToAll(toOthers);
 
 		toSender.put("state", "ok");
 		return toSender;
@@ -83,7 +83,7 @@ public abstract class Control {
 			return toSender;
 		}
 
-		servers.put(aServer, new Server());
+		servers.put(aServer, new Server(aServer));
 
 		toSender.put("state", "ok");
 		return toSender;
@@ -103,7 +103,7 @@ public abstract class Control {
 
 		HashMap<String, String> toPlayers = new HashMap<>();
 		toPlayers.put("command", "server_close");
-		s.sendMessageToPlayers(toPlayers);
+		s.sendMessageToAll(toPlayers);
 
 		toSender.put("state", "ok");
 		return toSender;

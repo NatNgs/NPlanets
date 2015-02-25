@@ -6,7 +6,7 @@ import inter.AServer;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import core.Player;
+import core.model.Player;
 
 /**
  * 
@@ -14,18 +14,21 @@ import core.Player;
  * 
  */
 public class Server {
+	private AServer serv;
 	private boolean ready;
 	public HashMap<APlayer, Player> players;
 	public HashSet<APlayer> playersReady;
 
-	public Server() {
+	public Server(AServer serv) {
+		this.serv = serv;
 		players = new HashMap<>();
 		playersReady = new HashSet<>();
 		ready = false;
 	}
 
 	// // // Utility Methods // // //
-	public void sendMessageToPlayers(HashMap<String, String> m) {
+	public void sendMessageToAll(HashMap<String, String> m) {
+		serv.recieveInfos(m);
 		for (APlayer ap : players.keySet())
 			ap.recieveInfos(m);
 	}
@@ -46,7 +49,7 @@ public class Server {
 		HashMap<String, String> toOthers = new HashMap<>();
 		toOthers.put("command", "player_leave");
 		toOthers.put("player", aPlayer.getName());
-		sendMessageToPlayers(toOthers);
+		sendMessageToAll(toOthers);
 		players.remove(aPlayer);
 
 		HashMap<String, String> toSender = new HashMap<>(c);
@@ -68,7 +71,7 @@ public class Server {
 		HashMap<String, String> toOthers = new HashMap<>();
 		toOthers.put("command", "player_ready");
 		toOthers.put("player", aPlayer.getName());
-		sendMessageToPlayers(toOthers);
+		sendMessageToAll(toOthers);
 
 		toSender.put("state", "ok");
 		return toSender;
@@ -83,12 +86,12 @@ public class Server {
 			return toSender;
 		}
 
-		playersReady.add(aPlayer);
+		playersReady.remove(aPlayer);
 
 		HashMap<String, String> toOthers = new HashMap<>();
 		toOthers.put("command", "player_not_ready");
 		toOthers.put("player", aPlayer.getName());
-		sendMessageToPlayers(toOthers);
+		sendMessageToAll(toOthers);
 
 		toSender.put("state", "ok");
 		return toSender;
@@ -113,7 +116,7 @@ public class Server {
 
 		HashMap<String, String> toPlayers = new HashMap<>();
 		toPlayers.put("command", "server_ready");
-		sendMessageToPlayers(toPlayers);
+		sendMessageToAll(toPlayers);
 
 		toSender.put("state", "ok");
 		return toSender;
@@ -132,7 +135,7 @@ public class Server {
 
 		HashMap<String, String> toPlayers = new HashMap<>();
 		toPlayers.put("command", "server_not_ready");
-		sendMessageToPlayers(toPlayers);
+		sendMessageToAll(toPlayers);
 
 		toSender.put("state", "ok");
 		return toSender;
