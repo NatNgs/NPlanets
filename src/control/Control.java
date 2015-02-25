@@ -1,7 +1,6 @@
 package control;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
 import vue.players.APlayer;
 import vue.server.AServer;
@@ -12,30 +11,10 @@ import core.Player;
  * @author Nathaël Noguès
  * 
  */
-public class Control {
-	private static final HashMap<AServer, Control> servers = new HashMap<>();
-	private HashMap<APlayer, Player> players;
-	private HashSet<APlayer> playersReady;
-
-	private Control() {
-		players = new HashMap<>();
-		playersReady = new HashSet<>();
-	}
+public abstract class Control {
+	private static final HashMap<AServer, Server> servers = new HashMap<>();
 
 	// PRIVATE access methods //
-	private void update(int nbTurnToSpend) {
-		while (nbTurnToSpend > 0) {
-			for (Player p : players.values())
-				p.update(1);
-			nbTurnToSpend--;
-		}
-	}
-
-	private void sendMessageToAll(HashMap<String, String> m) {
-		for (APlayer ap : players.keySet())
-			ap.recieveInfos(m);
-	}
-
 	private static AServer getServerByPlayer(APlayer aPlayer) {
 		for (AServer as : servers.keySet())
 			if (servers.get(as).players.containsKey(aPlayer))
@@ -79,54 +58,22 @@ public class Control {
 			return toSender;
 		}
 
-		Control game = servers.get(server);
+		Server game = servers.get(server);
 
 		game.players.put(aPlayer, new Player());
 
 		HashMap<String, String> toOthers = new HashMap<>();
 		toOthers.put("command", "player_join");
 		toOthers.put("player", aPlayer.getName());
-		game.sendMessageToAll(toOthers);
+		game.sendMessageToPlayers(toOthers);
 
 		toSender.put("state", "ok");
 		return toSender;
 	}
 
-	private HashMap<String, String> playerLeave(APlayer aPlayer,
-			HashMap<String, String> c) {
-
-		HashMap<String, String> toOthers = new HashMap<>();
-		toOthers.put("command", "player_leave");
-		toOthers.put("player", aPlayer.getName());
-		sendMessageToAll(toOthers);
-		players.remove(aPlayer);
-
-		HashMap<String, String> toSender = new HashMap<>(c);
-		toSender.put("state", "ok");
-		return toSender;
-	}
-
-	private HashMap<String, String> playerReady(APlayer aPlayer,
-			HashMap<String, String> c) {
-
-		HashMap<String, String> toSender = new HashMap<>(c);
-		if (playersReady.contains(aPlayer)) {
-			toSender.put("state", "already");
-			return toSender;
-		}
-
-		playersReady.add(aPlayer);
-
-		HashMap<String, String> toOthers = new HashMap<>();
-		toOthers.put("command", "player_ready");
-		toOthers.put("player", aPlayer.getName());
-		sendMessageToAll(toOthers);
-
-		return toSender;
-	}
 
 	// Server Command Methods //
-	private static HashMap<String, String> newServer(AServer aServer,
+	private static HashMap<String, String> serverOpen(AServer aServer,
 			HashMap<String, String> c) {
 		HashMap<String, String> toSender = new HashMap<>(c);
 
@@ -135,40 +82,39 @@ public class Control {
 			return toSender;
 		}
 
-		servers.put(aServer, new Control());
+		servers.put(aServer, new Server());
 
 		toSender.put("state", "ok");
 		return toSender;
 	}
 
-	private HashMap<String, String> serverClose(AServer aServer,
+	private static HashMap<String, String> serverClose(AServer aServer,
 			HashMap<String, String> c) {
-		if (!servers.containsKey(aServer))
-			return new MessageError("Server '" + c.getName()
-					+ "' is already closed", c);
+		HashMap<String, String> toSender = new HashMap<>(c);
+
+		Server s = servers.get(aServer);
+		if (s == null) {
+			toSender.put("state", "already");
+			return toSender;
+		}
 
 		servers.remove(aServer);
-		sendMessageToAll(new MessageServer("closed", aServer.getName()));
 
-		return new MessageCommand("ok", c);
+		HashMap<String, String> toPlayers = new HashMap<>();
+		toPlayers.put("command", "server_close");
+		s.sendMessageToPlayers(toPlayers);
+
+		toSender.put("state", "ok");
+		return toSender;
 	}
 
-	private HashMap<String, String> serverReady(AServer aServer,
-			HashMap<String, String> c) {
-		if (players.size() < 2)
-			return new MessageCommand("not_enough_players", c);
-		if (playersReady.size() < players.size())
-			return new MessageCommand("players_not_ready", c);
-
-		return new MessageCommand("ok", c);
-	}
 
 	// PUBLIC STATIC access methods //
 	public static HashMap<String, String> sendCommand(APlayer aPlayer,
 			HashMap<String, String> command) {
 
 		AServer serv = getServerByPlayer(aPlayer);
-		Control game = null;
+		Server game = null;
 		if (serv != null)
 			game = servers.get(serv);
 
@@ -182,12 +128,14 @@ public class Control {
 
 		try {
 			switch (commandName) {
-			case "player_leave":
-				return game.playerLeave(aPlayer, command);
-			case "player_join":
+			case "join":
 				return playerJoin(aPlayer, command);
-			case "player_ready":
+			case "leave":
+				return game.playerLeave(aPlayer, command);
+			case "ready":
 				return game.playerReady(aPlayer, command);
+			case "not_ready":
+				return game.playerNotReady(aPlayer, command);
 			}
 		} catch (NullPointerException npe) {
 			HashMap<String, String> retour = new HashMap<>();
@@ -204,18 +152,20 @@ public class Control {
 	public static HashMap<String, String> sendCommand(AServer aServer,
 			HashMap<String, String> c) {
 
-		Control game = servers.get(aServer);
+		Server game = servers.get(aServer);
 		String commandName = c.get("command");
 
 		if (commandName != null)
 			try {
 				switch (commandName) {
-				case "server_close":
-					return game.serverClose(aServer, c);
-				case "server_open":
-					return newServer(aServer, c);
-				case "server_ready":
+				case "close":
+					return serverClose(aServer, c);
+				case "open":
+					return serverOpen(aServer, c);
+				case "ready":
 					return game.serverReady(aServer, c);
+				case "not_ready":
+					return game.serverNotReady(aServer, c);
 				}
 			} catch (NullPointerException npe) {
 				HashMap<String, String> retour = new HashMap<>();

@@ -41,13 +41,13 @@ Commande pour déclarer un nouveau joueur
 
 envoi
 {
-command : "player_join"
+command : "join"
 server : String(server_name)
 }
 
 retour
 {
-command : "player_join"
+command : "join"
 state : "ok"		Le joueur a rejoint le serveur
 		"already"	Le joueur est déjà dans ce serveur
 		"another"	Le joueur est déjà dans un autre serveur
@@ -61,12 +61,12 @@ Commande pour quiter un serveur
 
 envoi
 {
-command : "player_leave"
+command : "leave"
 }
 
 retour
 {
-command : "player_leave"
+command : "leave"
 state : "ok"			Le joueur a quité son serveur
 		"not_in_game"	Le joueur n'est sur aucun serveur
 		"error"			Une autre erreur s'est produite
@@ -78,12 +78,12 @@ Commande pour prévenir d'être prêt à démarer le jeu
 
 envoi
 {
-command : "player_ready"
+command : "ready"
 }
 
 retour
 {
-command : "player_ready"
+command : "ready"
 state : "ok"		Le joueur est maintenant prêt
 		"already"	Le joueur est déjà prêt
 		"error"		Une autre erreur s'est produite
@@ -95,12 +95,12 @@ Commande pour prévenir de ne plus être prêt à démarer le jeu
 
 envoi
 {
-command : "player_not_ready"
+command : "not_ready"
 }
 
 retour
 {
-command : "player_not_ready"
+command : "not_ready"
 state : "ok"		Le joueur n'est plus prêt
 		"already"	Le joueur n'est déjà pas prêt
 		"error"		Une autre erreur s'est produite
