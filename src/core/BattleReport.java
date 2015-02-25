@@ -2,9 +2,9 @@ package core;
 
 import java.util.Iterator;
 
+import core.enums.CoefType;
 import core.map.Planet;
 import core.map.SpaceShip;
-import enums.CoefType;
 
 public class BattleReport {
 	private Player attPlayer;

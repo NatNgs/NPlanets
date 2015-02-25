@@ -1,0 +1,42 @@
+NPlanet Game, Developement Task List 
+© Copiright Nathaël Noguès
+
+Envoi d'un message du controleur vers l'utilisateur (serveur)
+
+##############
+
+Commande pour prévenir qu'un des joueurs à rejoin le serveur
+
+{
+commande : "player_join"
+player: String(player_name)
+}
+
+###############
+
+Commande pour prévenir qu'un des joueurs à quité le serveur
+
+{
+commande : "player_leave"
+player: String(player_name)
+}
+
+###############
+
+Commande pour prévenir qu'un des joueurs du serveur est désormais prêt
+
+{
+commande : "player_ready"
+player: String(player_name)
+}
+
+###############
+
+Commande pour prévenir qu'un des joueurs du serveur n'est plus prêt
+
+{
+commande : "player_not_ready"
+player: String(player_name)
+}
+
+###############

@@ -1,9 +1,10 @@
-package control;
+package core.control;
+
+import inter.APlayer;
+import inter.AServer;
 
 import java.util.HashMap;
 
-import vue.players.APlayer;
-import vue.server.AServer;
 import core.Player;
 
 /**

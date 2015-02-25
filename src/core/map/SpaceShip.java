@@ -3,8 +3,8 @@ package core.map;
 import java.util.HashSet;
 
 import core.*;
-import enums.CoefType;
-import enums.Constants;
+import core.enums.CoefType;
+import core.enums.Constants;
 
 /**
  * 

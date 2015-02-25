@@ -1,12 +1,18 @@
-package control;
+package core.control;
+
+import inter.APlayer;
+import inter.AServer;
 
 import java.util.HashMap;
 import java.util.HashSet;
 
-import vue.players.APlayer;
-import vue.server.AServer;
 import core.Player;
 
+/**
+ * 
+ * @author Nathaël Noguès
+ * 
+ */
 public class Server {
 	private boolean ready;
 	public HashMap<APlayer, Player> players;

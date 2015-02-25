@@ -1,22 +1,17 @@
-package vue.players;
+package inter;
 
 import java.util.HashMap;
 
-import control.Control;
+import core.control.Control;
 
-/**
- * 
- * @author Nathaël Noguès
- * 
- */
-public abstract class APlayer {
+public abstract class AServer {
 	private String name;
 
-	public APlayer(String name) {
+	public AServer(String name) {
 		this.name = name;
 	}
 
-	public final String getName() {
+	public String getName() {
 		return name;
 	}
 
@@ -25,4 +20,5 @@ public abstract class APlayer {
 	}
 
 	public abstract void recieveInfos(HashMap<String, String> m);
+
 }
