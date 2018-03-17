@@ -2,11 +2,6 @@ package natngs.nplanets.common;
 
 import java.util.Arrays;
 
-/**
- * 
- * @author Nathaël Noguès
- * 
- */
 public class Location {
 	public static final double DELTA = 0.004;
 	private static final int DIM = 3;
