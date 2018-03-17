@@ -1,4 +1,4 @@
-package java.natngs.nplanets.common;
+package natngs.nplanets.common;
 
 import java.util.Arrays;
 

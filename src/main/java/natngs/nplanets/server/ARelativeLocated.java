@@ -1,8 +1,8 @@
-package java.natngs.nplanets.server;
+package natngs.nplanets.server;
 
 import com.sun.istack.internal.NotNull;
-import java.natngs.nplanets.common.ILocated;
-import java.natngs.nplanets.common.Location;
+import natngs.nplanets.common.ILocated;
+import natngs.nplanets.common.Location;
 
 public abstract class ARelativeLocated implements ILocated {
 	private final ILocated ref;

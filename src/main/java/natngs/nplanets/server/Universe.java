@@ -1,7 +1,7 @@
-package java.natngs.nplanets.server;
+package natngs.nplanets.server;
 
-import java.natngs.nplanets.common.ILocated;
-import java.natngs.nplanets.common.Location;
+import natngs.nplanets.common.ILocated;
+import natngs.nplanets.common.Location;
 
 public class Universe implements ILocated {
 	@Override
