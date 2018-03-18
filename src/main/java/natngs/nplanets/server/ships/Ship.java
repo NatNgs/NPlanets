@@ -7,15 +7,15 @@ import natngs.nplanets.server.ILocated;
 public class Ship implements ILocated {
 	private static final double TIME_PRECISION = 0.0001;
 	private static final int FIND_PATH_LOOPS = 1000;
-	private final Location origin;
+	private final Location departure;
 	private final Location destination;
-	private final double launchTime;
+	private final double departureTime;
 	private final double arrivalTime;
 
-	private Ship(Location origin, Location destination, double launchTime, double arrivalTime) {
-		this.origin = origin;
+	private Ship(Location departure, Location destination, double departureTime, double arrivalTime) {
+		this.departure = departure;
 		this.destination = destination;
-		this.launchTime = launchTime;
+		this.departureTime = departureTime;
 		this.arrivalTime = arrivalTime;
 	}
 
@@ -23,7 +23,7 @@ public class Ship implements ILocated {
 		// compute launching speed
 		Vector inertialEnergy = new Vector(
 				origin.getLocation(launchTime + 0.5),
-				new Vector(origin.getLocation(launchTime-0.5), -1)
+				new Vector(origin.getLocation(launchTime - 0.5), -1)
 		);
 
 		Location initialLocation = origin.getLocation(launchTime);
@@ -49,12 +49,12 @@ public class Ship implements ILocated {
 
 	@Override
 	public Location getLocation(double when) {
-		if (when <= launchTime) {
-			return origin;
+		if (when <= departureTime) {
+			return departure;
 		} else if (when >= arrivalTime) {
 			return destination;
 		}
 
-		return Location.getMid(origin, destination, (when - launchTime) / (arrivalTime - launchTime));
+		return Location.getMid(departure, destination, (when - departureTime) / (arrivalTime - departureTime));
 	}
 }

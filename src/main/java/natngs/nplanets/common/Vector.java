@@ -12,7 +12,7 @@ public class Vector {
 		tx /= DELTA;
 		loc = new double[DIM];
 		for (int i = DIM - 1; i >= 0; --i) {
-			loc[i] = Math.round(c.loc[i] * tx)*DELTA;
+			loc[i] = Math.round(c.loc[i] * tx) * DELTA;
 		}
 	}
 
@@ -22,7 +22,7 @@ public class Vector {
 			loc[i] = 0;
 			for (Vector v : vs)
 				loc[i] += v.loc[i];
-			loc[i] = Math.round(loc[i]/DELTA) * DELTA;
+			loc[i] = Math.round(loc[i] / DELTA) * DELTA;
 		}
 	}
 
@@ -47,14 +47,14 @@ public class Vector {
 		double d = 0;
 		for (int i = DIM - 1; i >= 0; --i)
 			d += (loc[i] - c.loc[i]) * (loc[i] - c.loc[i]);
-		return Math.round(Math.sqrt(d)/DELTA)*DELTA;
+		return Math.round(Math.sqrt(d) / DELTA) * DELTA;
 	}
 
 	public double getLength() {
 		double d = 0;
 		for (int i = DIM - 1; i >= 0; --i)
 			d += loc[i] * loc[i];
-		return Math.round(Math.sqrt(d)/DELTA)*DELTA;
+		return Math.round(Math.sqrt(d) / DELTA) * DELTA;
 	}
 
 	@Override
