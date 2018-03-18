@@ -1,8 +1,8 @@
 package natngs.nplanets.server.planets;
 
-import natngs.nplanets.common.ILocated;
 import natngs.nplanets.common.Location;
 import natngs.nplanets.server.ARelativeLocated;
+import natngs.nplanets.server.ILocated;
 
 public class StaticPlanet extends ARelativeLocated {
 	private final Location relativeLocation;

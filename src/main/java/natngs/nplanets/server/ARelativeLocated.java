@@ -1,12 +1,11 @@
 package natngs.nplanets.server;
 
-import natngs.nplanets.common.ILocated;
 import natngs.nplanets.common.Location;
 
 public abstract class ARelativeLocated implements ILocated {
 	private final ILocated ref;
 
-	protected ARelativeLocated( ILocated ref) {
+	protected ARelativeLocated(ILocated ref) {
 		this.ref = ref;
 	}
 

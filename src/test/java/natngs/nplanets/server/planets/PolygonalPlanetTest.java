@@ -4,12 +4,10 @@ import natngs.nplanets.common.Location;
 import natngs.nplanets.server.ARelativeLocated;
 import natngs.nplanets.server.Universe;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 import static org.junit.Assert.assertEquals;
 
@@ -48,15 +46,15 @@ public class PolygonalPlanetTest {
 		assertEquals(new Location(1, -1, -1), p.getLocation(6));
 		assertEquals(new Location(1, 1, -1), p.getLocation(7));
 		assertEquals(new Location(-1, 1, -1), p.getLocation(8));
-		assertEquals(new Location(1, -1, -1), p.getLocation(orbitDuration*42));
+		assertEquals(new Location(1, -1, -1), p.getLocation(orbitDuration * 42));
 	}
 
 	@Test
 	public void relativeToAnotherPlanet() {
 		List<Location> polygon1 = new ArrayList<>();
 		polygon1.add(new Location(1, 0, 0));
-		polygon1.add(new Location(0,1,0));
-		polygon1.add(new Location(0,0,1));
+		polygon1.add(new Location(0, 1, 0));
+		polygon1.add(new Location(0, 0, 1));
 		double orbit1Duration = 12;
 
 		List<Location> polygon2 = new ArrayList<>();
