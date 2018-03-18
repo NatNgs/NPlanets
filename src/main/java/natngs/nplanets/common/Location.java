@@ -1,5 +1,7 @@
 package natngs.nplanets.common;
 
+import java.util.Arrays;
+
 public class Location extends Vector {
 	public static final Location ZERO = new Location(0, 0, 0);
 
@@ -26,7 +28,7 @@ public class Location extends Vector {
 
 		Location res = new Location(cSrc, ZERO);
 		for (int i = DIM - 1; i >= 0; --i)
-			res.loc[i] = res.loc[i] * (1 - d) + cDest.loc[i] * d;
+			res.loc[i] = (int)((res.loc[i] * (1 - d) + cDest.loc[i] * d)/DELTA)*DELTA;
 
 		return res;
 	}

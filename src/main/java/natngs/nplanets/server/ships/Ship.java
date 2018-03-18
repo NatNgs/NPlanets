@@ -2,12 +2,10 @@ package natngs.nplanets.server.ships;
 
 import natngs.nplanets.common.Location;
 import natngs.nplanets.common.Vector;
-import natngs.nplanets.server.ARelativeLocated;
 import natngs.nplanets.server.ILocated;
-import natngs.nplanets.server.Universe;
 
 public class Ship implements ILocated {
-	private static final double TIME_PRECISION = 0.01;
+	private static final double TIME_PRECISION = 0.0001;
 	private static final int FIND_PATH_LOOPS = 1000;
 	private final Location origin;
 	private final Location destination;
@@ -15,20 +13,18 @@ public class Ship implements ILocated {
 	private final double arrivalTime;
 
 	private Ship(Location origin, Location destination, double launchTime, double arrivalTime) {
-		System.out.println("Building ship launching at: " + launchTime+", arriving at: "+ arrivalTime);
 		this.origin = origin;
 		this.destination = destination;
 		this.launchTime = launchTime;
 		this.arrivalTime = arrivalTime;
 	}
 
-	public static Ship buildShip(ARelativeLocated origin, ARelativeLocated destination, double launchTime, double speed) {
+	public static Ship buildShip(ILocated origin, ILocated destination, double launchTime, double speed) {
 		// compute launching speed
 		Vector inertialEnergy = new Vector(
 				origin.getLocation(launchTime + 0.5),
 				new Vector(origin.getLocation(launchTime-0.5), -1)
 		);
-		System.out.println(inertialEnergy);
 
 		Location initialLocation = origin.getLocation(launchTime);
 		Vector reverseInitialLoc = new Vector(initialLocation, -1);
@@ -45,7 +41,6 @@ public class Ship implements ILocated {
 
 			double distance = shipVector.getLength();
 			duration = distance / speed;
-			System.out.println("Computing duration " + loops + ": " + arrival+", "+duration);
 			loops--;
 		} while (loops > 0 && Math.abs(launchTime - arrival + duration) > TIME_PRECISION);
 
@@ -59,6 +54,7 @@ public class Ship implements ILocated {
 		} else if (when >= arrivalTime) {
 			return destination;
 		}
+
 		return Location.getMid(origin, destination, (when - launchTime) / (arrivalTime - launchTime));
 	}
 }

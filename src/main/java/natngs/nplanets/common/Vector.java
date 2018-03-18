@@ -9,17 +9,21 @@ public class Vector {
 	protected final double[] loc;
 
 	public Vector(Vector c, double tx) {
+		tx /= DELTA;
 		loc = new double[DIM];
 		for (int i = DIM - 1; i >= 0; --i) {
-			loc[i] = c.loc[i] * tx;
+			loc[i] = Math.round(c.loc[i] * tx)*DELTA;
 		}
 	}
 
 	public Vector(Vector... vs) {
 		loc = new double[DIM];
-		for (int i = DIM - 1; i >= 0; --i)
+		for (int i = DIM - 1; i >= 0; --i) {
+			loc[i] = 0;
 			for (Vector v : vs)
 				loc[i] += v.loc[i];
+			loc[i] = Math.round(loc[i]/DELTA) * DELTA;
+		}
 	}
 
 	public Vector(double... xyz) {
@@ -43,14 +47,14 @@ public class Vector {
 		double d = 0;
 		for (int i = DIM - 1; i >= 0; --i)
 			d += (loc[i] - c.loc[i]) * (loc[i] - c.loc[i]);
-		return Math.sqrt(d);
+		return Math.round(Math.sqrt(d)/DELTA)*DELTA;
 	}
 
 	public double getLength() {
 		double d = 0;
 		for (int i = DIM - 1; i >= 0; --i)
 			d += loc[i] * loc[i];
-		return Math.sqrt(d);
+		return Math.round(Math.sqrt(d)/DELTA)*DELTA;
 	}
 
 	@Override
