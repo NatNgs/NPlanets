@@ -1,9 +1,10 @@
-package natngs.nplanets.server.ships;
+package natngs.nplanets.server.located.ships;
 
 import natngs.nplanets.common.Location;
+import natngs.nplanets.server.ILocated;
 import natngs.nplanets.server.Universe;
-import natngs.nplanets.server.planets.PolygonalPlanet;
-import natngs.nplanets.server.planets.StaticPlanet;
+import natngs.nplanets.server.located.planets.PolygonalPlanet;
+import natngs.nplanets.server.located.planets.StaticPlanet;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +14,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-public class ShipTest {
+public class OneSegmentShipTest {
 	private Universe u;
 
 	@Before
@@ -28,7 +29,11 @@ public class ShipTest {
 		double launch = 69;
 		double speed = 50;
 		double arrival = launch + 4;
-		Ship s = Ship.buildShip(p1, p2, launch, speed);
+
+		List<ILocated> steps = new ArrayList<>();
+		steps.add(p1);
+		steps.add(p2);
+		Ship s = new Ship(steps, speed, launch);
 
 		assertEquals(p1.getLocation(launch), s.getLocation(launch));
 		assertNotEquals(p1.getLocation(launch + 1), s.getLocation(launch + 1));
@@ -56,7 +61,10 @@ public class ShipTest {
 		double launch = 50;
 		double speed = 4;
 		double arrival = launch + 50;
-		Ship s = Ship.buildShip(p1, p2, launch, speed);
+		List<ILocated> steps = new ArrayList<>();
+		steps.add(p1);
+		steps.add(p2);
+		Ship s = new Ship(steps, speed, launch);
 
 		assertEquals(p1.getLocation(launch), s.getLocation(launch));
 		assertNotEquals(p1.getLocation(launch + 1), s.getLocation(launch + 1));
@@ -78,7 +86,10 @@ public class ShipTest {
 		double launch = 50;
 		double speed = 4;
 		double arrival = launch + 50;
-		Ship s = Ship.buildShip(p1, p2, launch, speed);
+		List<ILocated> steps = new ArrayList<>();
+		steps.add(p1);
+		steps.add(p2);
+		Ship s = new Ship(steps, speed, launch);
 
 		assertEquals(p1.getLocation(launch), s.getLocation(launch));
 		assertNotEquals(p1.getLocation(launch + 1), s.getLocation(launch + 1));
@@ -105,7 +116,10 @@ public class ShipTest {
 		double launch = 20;
 		double speed = 5;
 		double arrival = launch + 40;
-		Ship s = Ship.buildShip(p1, p2, launch, speed);
+		List<ILocated> steps = new ArrayList<>();
+		steps.add(p1);
+		steps.add(p2);
+		Ship s = new Ship(steps, speed, launch);
 
 		assertEquals(new Location(0, -100, -100), p1.getLocation(launch));
 		assertEquals(new Location(0, 100, 100), p2.getLocation(arrival));

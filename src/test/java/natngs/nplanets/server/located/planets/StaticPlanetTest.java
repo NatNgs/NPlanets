@@ -1,4 +1,4 @@
-package natngs.nplanets.server.planets;
+package natngs.nplanets.server.located.planets;
 
 import natngs.nplanets.common.Location;
 import natngs.nplanets.server.Universe;
