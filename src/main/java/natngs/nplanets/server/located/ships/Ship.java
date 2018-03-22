@@ -22,7 +22,7 @@ public class Ship implements ILocated {
 		this.speed = speed;
 
 		// build direct flight with 1 turn pause on each step
-		for (int i = 0; i < steps.size()-1; i++) {
+		for (int i = 0; i < steps.size() - 1; i++) {
 			buildSegment(i, departureTime);
 			departureTime = segments.get(segments.size() - 1).arrivalTime + 1;
 		}

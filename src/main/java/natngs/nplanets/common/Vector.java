@@ -2,10 +2,10 @@ package natngs.nplanets.common;
 
 import java.util.Arrays;
 
+import static natngs.nplanets.server.ILocated.DIM;
+
 public class Vector {
 	public static final double DELTA = 0.004;
-	protected static final int DIM = 3;
-	public static final Vector ZERO = new Vector(0, 0, 0);
 	protected final double[] loc;
 
 	public Vector(Vector c, double tx) {

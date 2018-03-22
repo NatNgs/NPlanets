@@ -31,9 +31,11 @@ public class PolygonalPlanet extends ARelativeLocated {
 		Location step1 = points.get(step);
 		Location step2 = points.get((step + 1) % points.size());
 
-		return new Location(
-				step1.get(0) * (1 - pct) + step2.get(0) * pct,
-				step1.get(1) * (1 - pct) + step2.get(1) * pct,
-				step1.get(2) * (1 - pct) + step2.get(2) * pct);
+		double[] loc = new double[ILocated.DIM];
+		for (int i = ILocated.DIM - 1; i >= 0; --i) {
+			loc[i] = step1.get(i) * (1 - pct) + step2.get(i) * pct;
+		}
+
+		return new Location(loc);
 	}
 }

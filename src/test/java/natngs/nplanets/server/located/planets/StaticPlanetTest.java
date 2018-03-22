@@ -17,7 +17,7 @@ public class StaticPlanetTest {
 
 	@Test
 	public void relativeToUniverse() {
-		Location relativeLocation = new Location(12, 23, 34);
+		Location relativeLocation = new Location(12, 23);
 		StaticPlanet mp = new StaticPlanet(u, relativeLocation);
 
 		Location atStart = mp.getLocation(0);
@@ -31,8 +31,8 @@ public class StaticPlanetTest {
 
 	@Test
 	public void relativeToAnotherPlanet() {
-		Location relativeLoc1 = new Location(12, 23, 34);
-		Location relativeLoc2 = new Location(45, 56, 67);
+		Location relativeLoc1 = new Location(12, 23);
+		Location relativeLoc2 = new Location(45, 56);
 		StaticPlanet mp1 = new StaticPlanet(u, relativeLoc1);
 		StaticPlanet mp2 = new StaticPlanet(mp1, relativeLoc2);
 
@@ -40,7 +40,7 @@ public class StaticPlanetTest {
 		Location atMomentA = mp2.getLocation(42);
 		Location atMomentB = mp2.getLocation(42.3);
 
-		Location absoluteLocation = new Location(12 + 45, 23 + 56, 34 + 67);
+		Location absoluteLocation = new Location(12 + 45, 23 + 56);
 		assertEquals(absoluteLocation, atStart);
 		assertEquals(absoluteLocation, atMomentA);
 		assertEquals(absoluteLocation, atMomentB);

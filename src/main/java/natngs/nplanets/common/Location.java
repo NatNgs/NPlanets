@@ -1,7 +1,17 @@
 package natngs.nplanets.common;
 
+import static natngs.nplanets.server.ILocated.DIM;
+
 public class Location extends Vector {
-	public static final Location ZERO = new Location(0, 0, 0);
+	public static final Location ZERO;
+
+	static {
+		double[] xyz = new double[DIM];
+		for (int i = DIM - 1; i >= 0; --i) {
+			xyz[i] = 0;
+		}
+		ZERO = new Location(xyz);
+	}
 
 	public Location(Location c, Vector decal) {
 		super(c, decal);
