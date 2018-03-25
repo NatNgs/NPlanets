@@ -14,7 +14,7 @@ public class Ship implements ILocated {
 	private final List<SegmentInfo> segments = new ArrayList<>(); // one size less than 'steps'
 	private final double speed;
 
-	public Ship(List<ILocated> steps, double speed, double departureTime) {
+	public Ship(List<ILocated> steps, double speed, double departureTime) throws Exception {
 		if (steps.size() < 2) { // DEBUG
 			throw new RuntimeException("Need at least 2 steps (Start and last locations)");
 		}
@@ -32,7 +32,7 @@ public class Ship implements ILocated {
 		return steps.size() - 1;
 	}
 
-	private void buildSegment(int segmentNumber, double departureTime) {
+	private void buildSegment(int segmentNumber, double departureTime) throws Exception {
 		if (segmentNumber < 0 || segmentNumber >= countSegments()) { // DEBUG
 			throw new RuntimeException("SegmentNumber cannot be " + segmentNumber + " in a " + countSegments() + " segments trip");
 		}
@@ -71,8 +71,9 @@ public class Ship implements ILocated {
 
 			double distance = shipVector.getLength();
 			duration = distance / speed;
-			loops--;
-		} while (loops > 0 && Math.abs(departureTime - arrival + duration) > TIME_PRECISION);
+			if (loops-- <= 0)
+				throw new Exception("Difficulties to build ship path");
+		} while (Math.abs(departureTime - arrival + duration) > TIME_PRECISION);
 
 
 		SegmentInfo segment = new SegmentInfo(departureTime, arrival, origin.getLocation(departureTime), destination.getLocation(arrival));
@@ -103,6 +104,16 @@ public class Ship implements ILocated {
 		throw new RuntimeException("This code should not been reachable - Problem in Ship");
 	}
 
+
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		for (SegmentInfo si : segments) {
+			str.append("\n> ").append(si.toString());
+		}
+		return str.toString();
+	}
+
 	private class SegmentInfo {
 		private double departureTime;
 		private double arrivalTime;
@@ -114,6 +125,11 @@ public class Ship implements ILocated {
 			this.arrivalTime = arrivalTime;
 			this.departureLocation = departureLocation;
 			this.arrivalLocation = arrivalLocation;
+		}
+
+		@Override
+		public String toString() {
+			return "from " + departureLocation + " (" + departureTime + ") to " + arrivalLocation + " (" + arrivalTime + ")";
 		}
 	}
 }

@@ -23,7 +23,7 @@ public class OneSegmentShipTest {
 	}
 
 	@Test
-	public void staticOriginStaticDestination() {
+	public void staticOriginStaticDestination() throws Exception {
 		StaticPlanet p1 = new StaticPlanet(u, new Location(-100, 42));
 		StaticPlanet p2 = new StaticPlanet(u, new Location(100, 42));
 		double launch = 69;
@@ -52,7 +52,7 @@ public class OneSegmentShipTest {
 
 
 	@Test
-	public void staticOriginMovingDestination() {
+	public void staticOriginMovingDestination() throws Exception {
 		StaticPlanet p1 = new StaticPlanet(u, new Location(-100, 0));
 		List<Location> l2 = new ArrayList<>();
 		l2.add(new Location(100, 100));
@@ -77,7 +77,7 @@ public class OneSegmentShipTest {
 
 
 	@Test
-	public void movingOriginStaticDestination() {
+	public void movingOriginStaticDestination() throws Exception {
 		List<Location> l1 = new ArrayList<>();
 		l1.add(new Location(100, 100));
 		l1.add(new Location(100, -100));
@@ -102,7 +102,7 @@ public class OneSegmentShipTest {
 
 
 	@Test
-	public void movingOriginMovingDestination() {
+	public void movingOriginMovingDestination() throws Exception {
 		List<Location> l1 = new ArrayList<>();
 		l1.add(new Location(-100, -200));
 		l1.add(new Location(-100, 0));

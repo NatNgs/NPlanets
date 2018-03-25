@@ -6,19 +6,19 @@ public class Location extends Vector {
 	public static final Location ZERO;
 
 	static {
-		double[] xyz = new double[DIM];
+		double[] loc = new double[DIM];
 		for (int i = DIM - 1; i >= 0; --i) {
-			xyz[i] = 0;
+			loc[i] = 0;
 		}
-		ZERO = new Location(xyz);
+		ZERO = new Location(loc);
 	}
 
 	public Location(Location c, Vector decal) {
 		super(c, decal);
 	}
 
-	public Location(double... xyz) {
-		super(xyz);
+	public Location(double... loc) {
+		super(loc);
 	}
 
 	/**

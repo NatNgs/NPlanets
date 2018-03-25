@@ -1,12 +1,14 @@
-package natngs.nplanets.ui.graphic.mapCascade;
+package natngs.nplanets.client.ui.graphicCascade;
 
-import java.awt.BorderLayout;
-import java.util.ArrayList;
+import natngs.nplanets.client.model.Planet;
+import natngs.nplanets.client.model.Plateau;
+import natngs.nplanets.client.model.Star;
+import natngs.nplanets.client.model.Vaisseau;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
-import natngs.nplanets.ui.plateauGeneral.*;
+import java.awt.*;
+import java.util.ArrayList;
 
 public class FMapCascade extends JFrame {
 	private static final long serialVersionUID = 4837381005071760790L;
@@ -26,34 +28,33 @@ public class FMapCascade extends JFrame {
 
 		final Plateau p = new Plateau();
 
-		for(int i=0; i<(int)(Math.random()*9+1); i++)
+		for (int i = 0; i < (int)(Math.random() * 9 + 1); i++)
 			p.addEtoile();
 
 		frame.setPlateau(p);
 
 		new Thread(()->{
 			try {
-				while(true) {
+				while (true) {
 					Thread.sleep(500);
 
-					if(p.getEtoiles().size() > 0) {
+					if (p.getEtoiles().size() > 0) {
 						Vaisseau v = null;
 						//	Choix de la source
-						Star et = p.getEtoiles().get((int)(Math.random()*p.getEtoiles().size()-1));
+						Star et = p.getEtoiles().get((int)(Math.random() * p.getEtoiles().size() - 1));
 
 						//	Chercher parmi les étoiles
-						int cp = (int)(Math.random()*et.getPlanets().size());
-						if(cp==0) {
+						int cp = (int)(Math.random() * et.getPlanets().size());
+						if (cp == 0) {
 							//	renvoyer un vaisseau au hasard parmi ceux déjà envoyés
-							if(vaisseaux.size()==0)
-								continue;	//	abandonner
+							if (vaisseaux.size() == 0)
+								continue;    //	abandonner
 
 							v = vaisseaux.remove(0);
-						}
-						else {
+						} else {
 							//	Chercher parmi les planet de l'étoile choisie
-							int cs = (int)(Math.random()*et.getPlanets().get(cp).getSatellites().size());
-							if(cs==0)
+							int cs = (int)(Math.random() * et.getPlanets().get(cp).getSatellites().size());
+							if (cs == 0)
 								//	envoyer un vaisseau de la planète
 								v = new Vaisseau(et.getPlanets().get(cp));
 							else
@@ -62,18 +63,18 @@ public class FMapCascade extends JFrame {
 						}
 
 						vaisseaux.add(v);
-					//	Choix de la destination
-						et = p.getEtoiles().get((int)(Math.random()*p.getEtoiles().size()-1));
+						//	Choix de la destination
+						et = p.getEtoiles().get((int)(Math.random() * p.getEtoiles().size() - 1));
 
 						//	Chercher parmi les étoiles
-						cp = (int)(Math.random()*et.getPlanets().size());
-						if(cp==0)
+						cp = (int)(Math.random() * et.getPlanets().size());
+						if (cp == 0)
 							//	cibler l'étoile trouvée
 							v.sendTo(et);
 						else {
 							//	Chercher parmi les planet de l'étoile choisie
-							int cs = (int)(Math.random()*et.getPlanets().get(cp).getSatellites().size());
-							if(cs==0)
+							int cs = (int)(Math.random() * et.getPlanets().get(cp).getSatellites().size());
+							if (cs == 0)
 								//	envoyer un vaisseau de la planète
 								v.sendTo(et.getPlanets().get(cp));
 							else
@@ -83,11 +84,13 @@ public class FMapCascade extends JFrame {
 						//System.out.println("["+t+"] "+v+" "+v.getTempsRestant());
 					}
 				}
-			} catch(Exception e){ System.err.println("STOPED !");}
+			} catch (Exception e) {
+				System.err.println("STOPED !");
+			}
 		}).start();
 
 		try {
-			while(true) {
+			while (true) {
 				go(p, vaisseaux, frame);
 				Thread.sleep(30);
 			}
@@ -95,11 +98,12 @@ public class FMapCascade extends JFrame {
 			e.printStackTrace();
 		}
 	}
-	private	synchronized static void go(Plateau p, ArrayList<Vaisseau> vaisseaux, JFrame frame){
+
+	private synchronized static void go(Plateau p, ArrayList<Vaisseau> vaisseaux, JFrame frame) {
 		p.avancer(0.01);
-		for(Vaisseau v : vaisseaux)
+		for (Vaisseau v : vaisseaux)
 			v.avancer(0.01);
-		t+=0.01;
+		t += 0.01;
 		frame.repaint();
 	}
 
@@ -107,6 +111,7 @@ public class FMapCascade extends JFrame {
 		this(v);
 		setPlateau(p);
 	}
+
 	public FMapCascade(ArrayList<Vaisseau> v) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Map Cascade");
@@ -122,43 +127,44 @@ public class FMapCascade extends JFrame {
 	}
 
 	public void setPlateau(Plateau p) {
-		unsetPlateau();	//	défaire le plateau actuellement affiché
+		unsetPlateau();    //	défaire le plateau actuellement affiché
 
 		tabbedPane.addTab("Galaxie", new MapGalaxie(p, v));
 
-		for(Star e : p.getEtoiles()) {
-			if(e.getPlanets().size()<1)
+		for (Star e : p.getEtoiles()) {
+			if (e.getPlanets().size() < 1)
 				continue;
 
 
-			if(tpEtoiles == null) {
+			if (tpEtoiles == null) {
 				tpEtoiles = new JTabbedPane();
 				tabbedPane.addTab("Étoiles", tpEtoiles);
 			}
 
 			MapEtoile mapEtoile = new MapEtoile(v, e);
-			tpEtoiles.addTab("Star "+e.getId(), mapEtoile);
+			tpEtoiles.addTab("Star " + e.getId(), mapEtoile);
 
 			JTabbedPane tpPlanetesEtoile = null;
 
-			for(Planet pl : e.getPlanets()) {
+			for (Planet pl : e.getPlanets()) {
 				//if(pl.getSatellites().size()<1)
 				//	continue;
 
-				if(tpPlanetes == null) {
+				if (tpPlanetes == null) {
 					tpPlanetes = new JTabbedPane();
 					tabbedPane.addTab("Planètes", tpPlanetes);
 				}
-				if(tpPlanetesEtoile == null) {
+				if (tpPlanetesEtoile == null) {
 					tpPlanetesEtoile = new JTabbedPane();
-					tpPlanetes.addTab("Star "+e.getId(), tpPlanetesEtoile);
+					tpPlanetes.addTab("Star " + e.getId(), tpPlanetesEtoile);
 				}
 
 				MapPlanète mapPlanete = new MapPlanète(v, pl);
-				tpPlanetesEtoile.addTab("Planète "+pl.getId(), mapPlanete);
+				tpPlanetesEtoile.addTab("Planète " + pl.getId(), mapPlanete);
 			}
 		}
 	}
+
 	public void unsetPlateau() {
 		tabbedPane.removeAll();
 		tpEtoiles = null;

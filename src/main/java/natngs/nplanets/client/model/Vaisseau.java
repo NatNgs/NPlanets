@@ -1,12 +1,12 @@
-package natngs.nplanets.ui.plateauGeneral;
+package natngs.nplanets.client.model;
 
 public class Vaisseau {
 
 	private static long idnum = 0;
 	private String id;
-	protected Astre position;	// destination si enMouvement
+	protected Astre position;    // destination si enMouvement
 	protected Coord coord;
-	protected Coord destCoord;	//	coordonnées de la destination
+	protected Coord destCoord;    //	coordonnées de la destination
 	private double vitesseOrigine, vitesse;
 	private boolean enMouvement;
 
@@ -17,34 +17,34 @@ public class Vaisseau {
 		vitesse = 0;
 		enMouvement = false;
 		idnum++;
-		id = position.getId()+String.format("v%X", idnum);
+		id = position.getId() + String.format("v%X", idnum);
 	}
 
 	public boolean avancer(double nb) {
-		if(!enMouvement)
+		if (!enMouvement)
 			return false;
 
 		//	temps restant
-		double tmps = coord.getDistance(destCoord)/vitesse;
+		double tmps = coord.getDistance(destCoord) / vitesse;
 
-		if(tmps < nb) {
+		if (tmps < nb) {
 			coord = destCoord;
 			enMouvement = false;
-			System.err.println("VAISSEAU ARRIVÉ sur "+position);
+			System.err.println("VAISSEAU ARRIVÉ sur " + position);
 			return true;
 		}
 
-		double coef = nb/tmps;
+		double coef = nb / tmps;
 
-		double x = coord.getX() + coef*(destCoord.getX()-coord.getX());
-		double y = coord.getY() + coef*(destCoord.getY()-coord.getY());
+		double x = coord.getX() + coef * (destCoord.getX() - coord.getX());
+		double y = coord.getY() + coef * (destCoord.getY() - coord.getY());
 		coord = new CoordC(x, y);
 
 		return false;
 	}
 
 	public void sendTo(Astre destination) {
-		if(position == destination || enMouvement)
+		if (position == destination || enMouvement)
 			return;
 
 		//	Vitesse de base
@@ -54,36 +54,36 @@ public class Vaisseau {
 		//if(position instanceof Planet)
 		//	vitesse = calcVitesse(position.getCoord().getReference().getCoord(), position.getCoord(), destination.getCoord(), vitesseOrigine, position.getVS());
 
-		if(destination instanceof Star)
+		if (destination instanceof Star)
 			destCoord = destination.getCoord();
 		else {
 			Planet d = (Planet)destination;
 
 			destCoord = d.getCoord();
 			double dist, duree, dist2 = destCoord.getDistance(coord);
-			do{
+			do {
 				dist = dist2;
-				duree = dist/vitesse;
+				duree = dist / vitesse;
 				//System.out.print("duree:"+duree+", distance:"+dist+", vitesse:"+vitesse+", ");
 
 				//	Vitesse de catapultage
-				if(position instanceof Planet)
+				if (position instanceof Planet)
 					vitesse = calcVitesse(position.getCoord().getReference().getCoord(), position.getCoord(), d.getFutureCoord(duree), vitesseOrigine, position.getVS());
 
 				destCoord = d.getFutureCoord(duree);
 				dist2 = destCoord.getDistance(coord);
 
 				//System.out.println("newVitesse:"+vitesse+", newDistance:"+dist2);
-				if(Math.pow(dist-dist2, 2)>1_000_000 || Double.isInfinite(duree) || Double.isNaN(duree) || Double.isNaN(vitesse)) {
+				if (Math.pow(dist - dist2, 2) > 1_000_000 || Double.isInfinite(duree) || Double.isNaN(duree) || Double.isNaN(vitesse)) {
 					//	Il semble impossible d'arriver à destination
-					vitesse = 0;	//	Remise en place des paramètres et annulation du vol
+					vitesse = 0;    //	Remise en place des paramètres et annulation du vol
 					return;
 				}
 				//System.out.println("distance:"+Math.pow(dist-dist2, 2));
-			}while(Math.pow(dist-dist2, 2)>0.001);
+			} while (Math.pow(dist - dist2, 2) > 0.001);
 
-			duree = dist/vitesse;
-			System.err.println("\nVAISSEAU ENVOYÉ "+id+", vers "+position.getId()+", durée:"+duree+", vitesse:"+vitesse+", distance:"+coord.getDistance(destCoord));
+			duree = dist / vitesse;
+			System.err.println("\nVAISSEAU ENVOYÉ " + id + ", vers " + position.getId() + ", durée:" + duree + ", vitesse:" + vitesse + ", distance:" + coord.getDistance(destCoord));
 
 			position = destination;
 			enMouvement = true;
@@ -93,12 +93,12 @@ public class Vaisseau {
 	/**
 	 * Calcule la vitesse d'un vaisseau lancé d'une planète (prise en compte de l'inertie)
 	 *
-	 * @param ref	Coordonnées de l'astre autour duquel tourne la planète de départ
-	 * @param depart	Coordonnées de la planète de départ 	/!\ PLANETE OBLIGATOIREMENT /!\
-	 * @param destination	Coordonnées de la destination
-	 * @param vs	Vitesse de base du vaisseau
-	 * @param vit 	vitesse_angulaire_rotation_source*rayon_orbite_source (garder le signe de var)
-	 * @return	Vitesse du vaisseau
+	 * @param ref         Coordonnées de l'astre autour duquel tourne la planète de départ
+	 * @param depart      Coordonnées de la planète de départ 	/!\ PLANETE OBLIGATOIREMENT /!\
+	 * @param destination Coordonnées de la destination
+	 * @param vs          Vitesse de base du vaisseau
+	 * @param vit         vitesse_angulaire_rotation_source*rayon_orbite_source (garder le signe de var)
+	 * @return Vitesse du vaisseau
 	 */
 	public static double calcVitesse(Coord ref, Coord depart, Coord destination, double vs, double vit) {
 		return vit;
@@ -143,13 +143,13 @@ public class Vaisseau {
 	}
 
 	public double getTempsRestant() {
-		if(!enMouvement || vitesse==0)
+		if (!enMouvement || vitesse == 0)
 			return 0;
-		return coord.getDistance(destCoord)/vitesse;
+		return coord.getDistance(destCoord) / vitesse;
 	}
 
 	public double getDistanceRestante() {
-		if(!enMouvement)
+		if (!enMouvement)
 			return 0;
 		return coord.getDistance(destCoord);
 	}

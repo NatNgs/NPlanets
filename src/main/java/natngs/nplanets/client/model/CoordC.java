@@ -1,4 +1,4 @@
-package natngs.nplanets.ui.plateauGeneral;
+package natngs.nplanets.client.model;
 
 public class CoordC extends Coord {
 
@@ -10,6 +10,7 @@ public class CoordC extends Coord {
 	public double getX() {
 		return getRayon();
 	}
+
 	@Override
 	public double getY() {
 		return getAngle();

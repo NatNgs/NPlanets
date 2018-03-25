@@ -1,13 +1,12 @@
 package natngs.nplanets.server.located.planets;
 
 import natngs.nplanets.common.Location;
-import natngs.nplanets.server.ARelativeLocated;
 import natngs.nplanets.server.ILocated;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PolygonalPlanet extends ARelativeLocated {
+public class PolygonalPlanet extends Planet {
 	private final List<Location> points;
 	private final double orbitDuration;
 
