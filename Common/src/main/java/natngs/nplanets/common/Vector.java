@@ -3,9 +3,11 @@ package natngs.nplanets.common;
 import java.util.Arrays;
 
 public class Vector {
+	@SuppressWarnings("WeakerAccess")
 	public static final int DIM = 2;
-	public static final double DELTA = 0.004;
-	protected final double[] loc;
+	static final double DELTA = 0.004;
+
+	final double[] loc;
 
 	public Vector(Vector c, double tx) {
 		tx /= DELTA;
@@ -15,6 +17,7 @@ public class Vector {
 		}
 	}
 
+	@SuppressWarnings("WeakerAccess")
 	public Vector(Vector... vs) {
 		loc = new double[DIM];
 		for (int i = DIM - 1; i >= 0; --i) {
@@ -25,6 +28,7 @@ public class Vector {
 		}
 	}
 
+	@SuppressWarnings("WeakerAccess")
 	public Vector(double... xyz) {
 		if (xyz.length != DIM)
 			throw new IllegalArgumentException(
@@ -42,6 +46,7 @@ public class Vector {
 			return super.equals(obj);
 	}
 
+	@SuppressWarnings("WeakerAccess")
 	public double getDistance(Vector c) {
 		double d = 0;
 		for (int i = DIM - 1; i >= 0; --i)
