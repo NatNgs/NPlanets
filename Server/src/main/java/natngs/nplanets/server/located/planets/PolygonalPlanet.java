@@ -1,6 +1,7 @@
 package natngs.nplanets.server.located.planets;
 
 import natngs.nplanets.common.Location;
+import natngs.nplanets.common.Vector;
 import natngs.nplanets.server.ILocated;
 
 import java.util.ArrayList;
@@ -30,8 +31,8 @@ public class PolygonalPlanet extends Planet {
 		Location step1 = points.get(step);
 		Location step2 = points.get((step + 1) % points.size());
 
-		double[] loc = new double[ILocated.DIM];
-		for (int i = ILocated.DIM - 1; i >= 0; --i) {
+		double[] loc = new double[Vector.DIM];
+		for (int i = Vector.DIM - 1; i >= 0; --i) {
 			loc[i] = step1.get(i) * (1 - pct) + step2.get(i) * pct;
 		}
 

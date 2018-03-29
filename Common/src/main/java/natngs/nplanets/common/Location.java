@@ -1,7 +1,5 @@
 package natngs.nplanets.common;
 
-import static natngs.nplanets.server.ILocated.DIM;
-
 public class Location extends Vector {
 	public static final Location ZERO;
 
