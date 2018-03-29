@@ -1,6 +1,7 @@
 package natngs.nplanets.common;
 
 public class Location extends Vector {
+	@SuppressWarnings("WeakerAccess")
 	public static final Location ZERO;
 
 	static {
@@ -11,10 +12,12 @@ public class Location extends Vector {
 		ZERO = new Location(loc);
 	}
 
+	@SuppressWarnings("WeakerAccess")
 	public Location(Location c, Vector decal) {
 		super(c, decal);
 	}
 
+	@SuppressWarnings("WeakerAccess")
 	public Location(double... loc) {
 		super(loc);
 	}
