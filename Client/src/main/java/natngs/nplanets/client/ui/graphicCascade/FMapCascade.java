@@ -159,7 +159,7 @@ public class FMapCascade extends JFrame {
 					tpPlanetes.addTab("Star " + e.getId(), tpPlanetesEtoile);
 				}
 
-				MapPlanète mapPlanete = new MapPlanète(v, pl);
+				MapPlanet mapPlanete = new MapPlanet(v, pl);
 				tpPlanetesEtoile.addTab("Planète " + pl.getId(), mapPlanete);
 			}
 		}

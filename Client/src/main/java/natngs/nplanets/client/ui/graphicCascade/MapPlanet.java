@@ -9,14 +9,14 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-public class MapPlanète extends JPanel {
+public class MapPlanet extends JPanel {
 	private static final long serialVersionUID = 8243341363124299036L;
 	private ArrayList<Vaisseau> v;
 	private Planet pl;
 	double coef;
 	double[] r;
 
-	public MapPlanète(ArrayList<Vaisseau> v, Planet pl) {
+	public MapPlanet(ArrayList<Vaisseau> v, Planet pl) {
 		this.v = v;
 		this.pl = pl;
 		setBackground(Color.BLACK);
