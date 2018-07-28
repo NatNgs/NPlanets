@@ -1,14 +1,15 @@
-package natngs.nplanets.server.located.planets;
+package natngs.nplanets.server.movements.repetitive;
 
 import natngs.nplanets.common.Location;
 import natngs.nplanets.server.ILocated;
+import natngs.nplanets.server.movements.ARelativeMovement;
 
-public class EllipsisOrbit2DPlanet extends Planet {
+public class EllipsisOrbit2D extends ARelativeMovement {
 	private final ILocated center;
 	private final ILocated excenter;
 	private final ILocated notEllipticSimilar;
 
-	public EllipsisOrbit2DPlanet(ILocated ref, ILocated excenter, ILocated notEllipticSimilar) {
+	public EllipsisOrbit2D(ILocated ref, ILocated excenter, ILocated notEllipticSimilar) {
 		super(ref);
 		this.center = ref;
 		this.excenter = excenter;
@@ -17,8 +18,8 @@ public class EllipsisOrbit2DPlanet extends Planet {
 
 	@Override
 	protected Location getRelativeLocation(double when) {
-		Location a = this.center.getRelativeLocation(when);
-		Location b = this.notEllipticSimilar.getRelativeLocation(when);
+		Location a = this.center.getLocation(when);
+		Location b = this.notEllipticSimilar.getLocation(when);
 		
 		double cx = a.get(0);
 		double cy = a.get(1);
@@ -30,7 +31,7 @@ public class EllipsisOrbit2DPlanet extends Planet {
 			return new Location((cx+sx)/2.0, (cy+sy)/2.0);
 		}
 
-		Location e = this.excenter.getRelativeLocation(when);
+		Location e = this.excenter.getLocation(when);
 		double ex = e.get(0);
 		double ey = e.get(1);
 		

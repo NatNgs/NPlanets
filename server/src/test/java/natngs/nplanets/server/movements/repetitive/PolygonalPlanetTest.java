@@ -1,8 +1,8 @@
-package natngs.nplanets.server.located.planets;
+package natngs.nplanets.server.movements.repetitive;
 
 import natngs.nplanets.common.Location;
-import natngs.nplanets.server.ARelativeLocated;
 import natngs.nplanets.server.Universe;
+import natngs.nplanets.server.located.Planet;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,7 +30,7 @@ public class PolygonalPlanetTest {
 		polygon.add(new Location(100, -100));
 		double orbitDuration = 6;
 
-		ARelativeLocated p = new PolygonalPlanet(u, polygon, orbitDuration);
+		PolygonalMove p = new PolygonalMove(u, polygon, orbitDuration);
 
 		assertEquals(new Location(100, -100), p.getLocation(0));
 		assertEquals(new Location(100, -80), p.getLocation(0.1));
@@ -63,8 +63,8 @@ public class PolygonalPlanetTest {
 		polygon2.add(new Location(0, 0));
 		double orbit2Duration = 6;
 
-		ARelativeLocated p1 = new PolygonalPlanet(u, polygon1, orbit1Duration);
-		ARelativeLocated p2 = new PolygonalPlanet(p1, polygon2, orbit2Duration);
+		PolygonalMove p1 = new PolygonalMove(u, polygon1, orbit1Duration);
+		PolygonalMove p2 = new PolygonalMove(new Planet(p1), polygon2, orbit2Duration);
 
 		assertEquals(new Location(0, 0), p2.getLocation(0)); // st 0/0
 		assertEquals(new Location(25, -25), p2.getLocation(1));

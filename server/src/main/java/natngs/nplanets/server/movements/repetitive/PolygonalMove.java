@@ -1,17 +1,18 @@
-package natngs.nplanets.server.located.planets;
+package natngs.nplanets.server.movements.repetitive;
 
 import natngs.nplanets.common.Location;
 import natngs.nplanets.common.Vector;
 import natngs.nplanets.server.ILocated;
+import natngs.nplanets.server.movements.ARelativeMovement;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PolygonalPlanet extends Planet {
+public class PolygonalMove extends ARelativeMovement {
 	private final List<Location> points;
 	private final double orbitDuration;
 
-	public PolygonalPlanet(ILocated ref, List<Location> points, double orbitDuration) {
+	public PolygonalMove(ILocated ref, List<Location> points, double orbitDuration) {
 		super(ref);
 		if (points.size() < 2)
 			throw new RuntimeException("Need at least 2 points to make a PolygonalPlanet");

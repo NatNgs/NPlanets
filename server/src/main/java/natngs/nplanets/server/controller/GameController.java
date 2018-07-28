@@ -1,8 +1,8 @@
 package natngs.nplanets.server.controller;
 
 import natngs.nplanets.server.Universe;
-import natngs.nplanets.server.located.planets.Planet;
-import natngs.nplanets.server.located.ships.Ship;
+import natngs.nplanets.server.located.Planet;
+import natngs.nplanets.server.located.Ship;
 
 import java.util.HashMap;
 import java.util.Map;

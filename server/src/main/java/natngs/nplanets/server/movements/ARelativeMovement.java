@@ -1,11 +1,13 @@
-package natngs.nplanets.server;
+package natngs.nplanets.server.movements;
 
 import natngs.nplanets.common.Location;
+import natngs.nplanets.server.ILocated;
+import natngs.nplanets.server.movements.IMovement;
 
-public abstract class ARelativeLocated implements ILocated {
+public abstract class ARelativeMovement implements IMovement {
 	private final ILocated ref;
 
-	protected ARelativeLocated(ILocated ref) {
+	protected ARelativeMovement(ILocated ref) {
 		this.ref = ref;
 	}
 

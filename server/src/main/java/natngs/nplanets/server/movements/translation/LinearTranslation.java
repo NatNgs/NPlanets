@@ -1,30 +1,36 @@
-package natngs.nplanets.server.located.ships;
+package natngs.nplanets.server.movements.translation;
 
 import natngs.nplanets.common.Location;
 import natngs.nplanets.common.Vector;
 import natngs.nplanets.server.ILocated;
+import natngs.nplanets.server.located.Ship;
+import natngs.nplanets.server.movements.IMovement;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Ship implements ILocated {
+/**
+ * Before departure time, movement is similar to StaticRelative of first step.
+ * After that, object will move at constant speed to next points
+ * After arrived at last step, movement is similar to StaticRelative of last step.
+ */
+public class LinearTranslation implements IMovement {
 	private static final double TIME_PRECISION = 0.0001;
 	private static final int FIND_PATH_LOOPS = 1000;
 	private final List<ILocated> steps;
 	private final List<SegmentInfo> segments = new ArrayList<>(); // one size less than 'steps'
 	private final double speed;
 
-	public Ship(List<ILocated> steps, double speed, double departureTime) throws Exception {
+	public LinearTranslation(List<ILocated> steps, double speed, double departureTime) throws Exception {
 		if (steps.size() < 2) { // DEBUG
 			throw new RuntimeException("Need at least 2 steps (Start and last locations)");
 		}
 		this.steps = steps;
 		this.speed = speed;
 
-		// build direct flight with 1 turn pause on each step
+		// build translation flight with 1 turn pause on each step
 		for (int i = 0; i < steps.size() - 1; i++) {
-			buildSegment(i, departureTime);
-			departureTime = segments.get(segments.size() - 1).arrivalTime + 1;
+			departureTime = buildSegment(i, departureTime); // next departure time
 		}
 	}
 
@@ -32,7 +38,7 @@ public class Ship implements ILocated {
 		return steps.size() - 1;
 	}
 
-	private void buildSegment(int segmentNumber, double departureTime) throws Exception {
+	private double buildSegment(int segmentNumber, double departureTime) throws Exception {
 		if (segmentNumber < 0 || segmentNumber >= countSegments()) { // DEBUG
 			throw new RuntimeException("SegmentNumber cannot be " + segmentNumber + " in a " + countSegments() + " segments trip");
 		}
@@ -72,21 +78,19 @@ public class Ship implements ILocated {
 			double distance = shipVector.getLength();
 			duration = distance / speed;
 			if (loops-- <= 0)
-				throw new Exception("Difficulties to build ship path");
+				throw new Exception("Difficulties to build LinearTranslation path");
 		} while (Math.abs(departureTime - arrival + duration) > TIME_PRECISION);
 
 
 		SegmentInfo segment = new SegmentInfo(departureTime, arrival, origin.getLocation(departureTime), destination.getLocation(arrival));
 		segments.add(segment);
+
+		return segment.arrivalTime;
 	}
 
 
 	@Override
 	public Location getLocation(double when) {
-		if (segments.size() < steps.size() - 1) {
-			throw new RuntimeException("Ship trip not completely yet computed.");
-		}
-
 		// check if before or after flight
 		if (when <= segments.get(0).departureTime) {
 			return steps.get(0).getLocation(when);
@@ -101,7 +105,7 @@ public class Ship implements ILocated {
 			}
 		}
 
-		throw new RuntimeException("This code should not been reachable - Problem in Ship");
+		throw new RuntimeException("This code should not been reachable - Problem in Movement\n"+ when + this.toString());
 	}
 
 
@@ -131,5 +135,4 @@ public class Ship implements ILocated {
 		public String toString() {
 			return "from " + departureLocation + " (" + departureTime + ") to " + arrivalLocation + " (" + arrivalTime + ")";
 		}
-	}
-}
+	}}
